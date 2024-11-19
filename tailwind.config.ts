@@ -62,7 +62,9 @@ const config: Config = {
   			'color-5': 'hsl(var(--color-5))'
   		},
   		animation: {
-  			rainbow: 'rainbow var(--speed, 2s) infinite linear'
+  			rainbow: 'rainbow var(--speed, 2s) infinite linear',
+  			ripple: 'ripple 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+  			grid: "grid 15s linear infinite",
   		},
   		keyframes: {
   			rainbow: {
@@ -72,7 +74,19 @@ const config: Config = {
   				'100%': {
   					'background-position': '200%'
   				}
-  			}
+  			},
+  			ripple: {
+  				'0%, 100%': {
+  					transform: 'translate(-50%, -50%) scale(1)'
+  				},
+  				'50%': {
+  					transform: 'translate(-50%, -50%) scale(0.9)'
+  				}
+  			},
+  			grid: {
+  				"0%": { transform: "translateY(-50%)" },
+  				"100%": { transform: "translateY(0)" },
+  			},
   		}
   	}
   },
