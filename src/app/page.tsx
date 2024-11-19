@@ -8,35 +8,63 @@ import { RainbowButton } from '@/components/ui/rainbow-button'
 import { Dock, DockIcon } from '@/components/ui/dock'
 import { motion } from 'framer-motion'
 import { RetroGrid } from '@/components/ui/retro-grid'
+import { useState } from 'react'
 
-const NavLink = ({ children }: { children: React.ReactNode }) => (
-  <motion.a 
-    href="#" 
-    className="hover:text-gray-600"
-    whileHover={{ scale: 1.2 }}
-    transition={{ type: "spring", stiffness: 400, damping: 10 }}
+// 定義 NavLink 組件的 props 類型
+interface NavLinkProps {
+  children: React.ReactNode;
+  href?: string;
+}
+
+// 更新 NavLink 組件
+const NavLink = ({ children, href = "#" }: NavLinkProps) => (
+  <a 
+    href={href}
+    target={href.startsWith("http") ? "_blank" : undefined}
+    rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+    className="relative px-3 py-1 group transition-colors duration-300 hover:text-gray-600"
   >
-    {children}
-  </motion.a>
-)
+    {/* 背景動畫效果 */}
+    <span className="absolute inset-0 w-full h-0.5 bg-gradient-to-r from-violet-500 to-fuchsia-500 opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out bottom-0 group-hover:h-full -z-10 rounded-md" />
+    
+    {/* 文字 */}
+    <span className="relative z-10 transition-colors duration-300 group-hover:text-white">
+      {children}
+    </span>
+  </a>
+);
 
 export default function Home() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-gray-50 relative overflow-hidden">
       {/* 背景動畫 */}
       <RetroGrid className="fixed inset-0 z-0" />
 
       {/* 導航欄 */}
-      <nav className="py-6 px-8 relative z-10">
-        <div className="max-w-[1400px] mx-auto flex justify-between items-center">
-          <div className="text-2xl font-bold tracking-tight">SkMswDee.</div>
-          <div className="flex gap-12 text-sm">
+      <nav className="py-6 relative z-10">
+        <div className="max-w-[1400px] mx-auto flex justify-center items-center relative">
+          {/* Logo - 絕對定位到左側 */}
+          <div className="absolute left-8 text-2xl font-bold tracking-tight">
+            SkMswDee.
+          </div>
+          
+          {/* 導航連結 - 居中對齊，使用 -ml-21 */}
+          <div className="flex gap-12 text-sm -ml-21">
             <NavLink>HOME</NavLink>
             <NavLink>PRODUCT</NavLink>
-            <NavLink>STORE</NavLink>
+            <NavLink href="https://dandeetw.com/index.php?route=common/home">STORE</NavLink>
             <NavLink>ABOUT ME</NavLink>
           </div>
-          <button className="text-2xl">≡</button>
+
+          {/* 選單按鈕 - 絕對定位到右側 */}
+          <button 
+            onClick={() => setIsMenuOpen(true)}
+            className="absolute right-8 text-2xl hover:opacity-70 transition-opacity"
+          >
+            ≡
+          </button>
         </div>
       </nav>
 
@@ -57,18 +85,61 @@ export default function Home() {
 
           {/* 中間圖片區域 */}
           <div className="relative h-[700px] col-span-1">
-            {/* 黃色圓形背景 - 保持原位 */}
-            <div className="absolute left-1/2 top-[45%] -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] bg-[#F4B63F] rounded-full"></div>
+            {/* 強烈現代感圓形背景 - 只調整圓圈的 TOP 值 */}
+            <div className="absolute left-1/2 top-[50%] -translate-x-1/2 -translate-y-1/2 w-[525px] h-[525px] rounded-full bg-gradient-to-r from-rose-500 via-fuchsia-600 to-indigo-600 opacity-95 animate-pulse-strong shadow-[0_0_80px_rgba(219,39,119,0.4)]">
+              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/40 via-white/20 to-transparent" />
+            </div>
             
-            {/* 人物圖片 - 調整到 48% */}
-            <div className="absolute left-[55%] top-[48%] -translate-x-1/2 -translate-y-1/3 w-[500px] h-[650px] z-10">
+            {/* 人物圖片區域 */}
+            <div className="absolute left-[55%] top-[48%] -translate-x-1/2 -translate-y-1/3 w-[500px] h-[650px] z-10 group">
+              {/* 主圖片 - 彩色底層 */}
               <Image
                 src="/images/profile.png"
                 alt="Profile"
                 fill
                 priority
-                className="grayscale contrast-125 object-contain"
+                className="object-contain transform transition-all duration-1000 ease-out scale-100 group-hover:scale-105"
               />
+              
+              {/* 黑白圖層 - 使用 clip-path 效果 */}
+              <div className="absolute inset-0 transition-all duration-1000 ease-in-out group-hover:[clip-path:circle(0%_at_50%_50%)] [clip-path:circle(100%_at_50%_50%)]">
+                <Image
+                  src="/images/profile.png"
+                  alt="Profile"
+                  fill
+                  priority
+                  className="grayscale contrast-125 object-contain"
+                />
+              </div>
+
+              {/* 動態光環效果 */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000">
+                {/* 內層光環 */}
+                <div className="absolute inset-0 animate-pulse-fast">
+                  <div className="absolute inset-0 bg-gradient-to-r from-rose-500/0 via-white/10 to-indigo-500/0 blur-2xl" />
+                </div>
+                
+                {/* 外層光環 */}
+                <div className="absolute -inset-4 animate-pulse-slow">
+                  <div className="absolute inset-0 bg-gradient-to-r from-fuchsia-500/0 via-white/5 to-violet-500/0 blur-3xl" />
+                </div>
+              </div>
+
+              {/* 懸浮粒子效果 */}
+              <div className="absolute -inset-10 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 overflow-hidden">
+                {[...Array(20)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="absolute w-1 h-1 bg-white rounded-full animate-float"
+                    style={{
+                      left: `${Math.random() * 100}%`,
+                      top: `${Math.random() * 100}%`,
+                      animationDelay: `${Math.random() * 2}s`,
+                      animationDuration: `${2 + Math.random() * 3}s`
+                    }}
+                  />
+                ))}
+              </div>
             </div>
 
             {/* 標語 - 保持原位 */}
@@ -92,7 +163,7 @@ export default function Home() {
             magnification={80}
             distance={100}
           >
-            {/* 個人主頁相關 */}
+            {/* 個人主頁關 */}
             <DockIcon>
               <a 
                 href="https://www.facebook.com/dee.chen3" 
