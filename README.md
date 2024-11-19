@@ -9,6 +9,7 @@
 - Tailwind CSS
 - Framer Motion
 - React Icons
+- Class Variance Authority
 
 ## ✨ 特色功能
 
@@ -18,6 +19,8 @@
 - 📱 完全響應式設計
 - 🎭 黑白對比的視覺風格
 - 🔄 流暢的頁面動畫
+- 🌐 RetroGrid 背景動畫
+- 🎯 社群媒體整合
 
 ## 🛠️ 安裝
 
