@@ -17,7 +17,7 @@ const DEFAULT_MAGNIFICATION = 60;
 const DEFAULT_DISTANCE = 140;
 
 const dockVariants = cva(
-  "supports-backdrop-blur:bg-white/10 supports-backdrop-blur:dark:bg-black/10 mx-auto mt-8 flex h-[58px] w-max gap-2 rounded-2xl border p-2 backdrop-blur-md",
+  "supports-backdrop-blur:bg-white/10 supports-backdrop-blur:dark:bg-black/10 mx-auto flex h-[58px] w-max gap-2 rounded-2xl border p-2 backdrop-blur-md items-center",
 );
 
 const Dock = React.forwardRef<HTMLDivElement, DockProps>(
@@ -95,13 +95,13 @@ const DockIcon = ({
   const widthSync = useTransform(
     distanceCalc,
     [-distance, 0, distance],
-    [size, magnification, size],
+    [size, size * 1.5, size],
   );
 
   const width = useSpring(widthSync, {
     mass: 0.1,
-    stiffness: 150,
-    damping: 12,
+    stiffness: 250,
+    damping: 15,
   });
 
   return (
@@ -109,12 +109,14 @@ const DockIcon = ({
       ref={ref}
       style={{ width }}
       className={cn(
-        "flex aspect-square cursor-pointer items-center justify-center rounded-full",
-        className,
+        "flex aspect-square cursor-pointer items-center justify-center relative transition-all duration-150",
+        className
       )}
       {...props}
     >
-      {children}
+      <div className="absolute inset-0 flex items-center justify-center">
+        {children}
+      </div>
     </motion.div>
   );
 };

@@ -1,7 +1,9 @@
 'use client'
 
 import Image from 'next/image'
-import { FaFacebookF, FaInstagram, FaYoutube, FaWhatsapp } from 'react-icons/fa'
+import { FaFacebookF, FaInstagram, FaYoutube, FaWhatsapp, FaTelegram } from 'react-icons/fa'
+import { FaTiktok } from 'react-icons/fa6'
+import { SiLine } from 'react-icons/si'
 import { RainbowButton } from '@/components/ui/rainbow-button'
 import { Dock, DockIcon } from '@/components/ui/dock'
 import { motion } from 'framer-motion'
@@ -88,41 +90,98 @@ export default function Home() {
         </div>
       </main>
 
-      {/* 底部固定區域 */}
-      <div className="fixed bottom-8 w-full px-8 z-10">
-        <div className="max-w-[1400px] mx-auto flex justify-between items-center">
-          {/* 左側社交媒體圖標 */}
-          <div>
-            <Dock 
-              className="bg-transparent border-0 mt-0 p-0" 
-              magnification={50} 
-              distance={100}
-            >
-              <DockIcon>
-                <div className="w-10 h-10 bg-black hover:bg-gray-800 transition-colors rounded-full flex items-center justify-center">
-                  <FaFacebookF className="text-white text-lg" />
+      {/* 底部固定區域 - 增加底部間距 */}
+      <div className="fixed bottom-16 w-full px-8 z-10">
+        <div className="max-w-[1400px] mx-auto flex justify-center items-center">
+          <Dock 
+            className="supports-backdrop-blur:bg-white/10 rounded-2xl border p-3 backdrop-blur-md flex items-center" 
+            magnification={100} 
+            distance={120}
+          >
+            {/* 個人主頁相關 */}
+            <DockIcon size={45}>
+              <a 
+                href="https://www.facebook.com/dee.chen3" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex h-full w-full items-center justify-center"
+              >
+                <div className="flex items-center justify-center">
+                  <FaFacebookF className="text-black text-2xl" />
                 </div>
-              </DockIcon>
-              <DockIcon>
-                <div className="w-10 h-10 bg-black hover:bg-gray-800 transition-colors rounded-full flex items-center justify-center">
-                  <FaInstagram className="text-white text-lg" />
-                </div>
-              </DockIcon>
-              <DockIcon>
-                <div className="w-10 h-10 bg-black hover:bg-gray-800 transition-colors rounded-full flex items-center justify-center">
-                  <FaYoutube className="text-white text-lg" />
-                </div>
-              </DockIcon>
-              <DockIcon>
-                <div className="w-10 h-10 bg-black hover:bg-gray-800 transition-colors rounded-full flex items-center justify-center">
-                  <FaWhatsapp className="text-white text-lg" />
-                </div>
-              </DockIcon>
-            </Dock>
-          </div>
+              </a>
+            </DockIcon>
+            <DockIcon size={45}>
+              <a 
+                href="https://www.instagram.com/deedeeboy_xoxo" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center justify-center h-full"
+              >
+                <FaInstagram className="text-black text-2xl" />
+              </a>
+            </DockIcon>
 
-          {/* 右側位置資訊 */}
-          <p className="text-sm">台北市, 台灣</p>
+            {/* 分隔線 */}
+            <div className="h-8 w-[1px] bg-gray-300 mx-2" />
+
+            {/* 內容創作相關 */}
+            <DockIcon size={45}>
+              <a 
+                href="https://www.youtube.com/@DanDee0812" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center justify-center h-full"
+              >
+                <FaYoutube className="text-black text-2xl" />
+              </a>
+            </DockIcon>
+            <DockIcon size={45}>
+              <a 
+                href="https://www.tiktok.com/@danieldeeboy_xoxo" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center justify-center h-full"
+              >
+                <FaTiktok className="text-black text-2xl" />
+              </a>
+            </DockIcon>
+
+            {/* 分隔線 */}
+            <div className="h-8 w-[1px] bg-gray-300 mx-2" />
+
+            {/* 通訊工具相關 */}
+            <DockIcon size={45}>
+              <a 
+                href="https://wa.me/886970737011" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center justify-center h-full"
+              >
+                <FaWhatsapp className="text-black text-2xl" />
+              </a>
+            </DockIcon>
+            <DockIcon size={45}>
+              <a 
+                href="#" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center justify-center h-full"
+              >
+                <SiLine className="text-black text-2xl" />
+              </a>
+            </DockIcon>
+            <DockIcon size={45}>
+              <a 
+                href="#" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center justify-center h-full"
+              >
+                <FaTelegram className="text-black text-2xl" />
+              </a>
+            </DockIcon>
+          </Dock>
         </div>
       </div>
     </div>
