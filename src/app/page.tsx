@@ -5,7 +5,7 @@ import { FaFacebookF, FaInstagram, FaYoutube, FaWhatsapp, FaTelegram } from 'rea
 import { FaTiktok } from 'react-icons/fa6'
 import { SiLine } from 'react-icons/si'
 import { RainbowButton } from '@/components/ui/rainbow-button'
-import { Dock, DockIcon } from '@/components/ui/dock'
+import { Dock, DockIcon, DEFAULT_MAGNIFICATION, DEFAULT_DISTANCE } from '@/components/ui/dock'
 import { motion } from 'framer-motion'
 import { RetroGrid } from '@/components/ui/retro-grid'
 import { useState } from 'react'
@@ -71,16 +71,8 @@ export default function Home() {
       {/* 主要內容區 */}
       <main className="px-8 relative z-10">
         <div className="max-w-[1400px] mx-auto grid grid-cols-3 gap-8">
-          {/* 左側文字 */}
+          {/* 左側區域 - 保持空白 */}
           <div className="flex flex-col justify-start mt-[180px]">
-            <p className="text-gray-800 mb-4 max-w-[400px] leading-relaxed">
-              I'm just an ordinary person like you,<br />
-              just don't living within the confines<br />
-              that society imposes...
-            </p>
-            <RainbowButton className="text-white w-fit">
-              Read More
-            </RainbowButton>
           </div>
 
           {/* 中間圖片區域 */}
@@ -155,98 +147,68 @@ export default function Home() {
         </div>
       </main>
 
-      {/* 底部固定區域 */}
-      <div className="fixed bottom-16 w-full px-8 z-10">
-        <div className="max-w-[1400px] mx-auto flex justify-center items-center">
-          <Dock 
-            className="supports-backdrop-blur:bg-white/10 rounded-2xl border p-3 backdrop-blur-md flex items-center"
-            magnification={80}
-            distance={100}
+      {/* 垂直社交媒體 Dock */}
+      <Dock 
+        magnification={DEFAULT_MAGNIFICATION}
+        distance={DEFAULT_DISTANCE}
+      >
+        {/* Facebook */}
+        <DockIcon>
+          <a 
+            href="https://www.facebook.com/dee.chen3" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex h-full w-full items-center justify-center"
           >
-            {/* 個人主頁關 */}
-            <DockIcon>
-              <a 
-                href="https://www.facebook.com/dee.chen3" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex h-full w-full items-center justify-center"
-              >
-                <FaFacebookF className="text-black text-2xl" />
-              </a>
-            </DockIcon>
-            <DockIcon>
-              <a 
-                href="https://www.instagram.com/deedeeboy_xoxo" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex h-full w-full items-center justify-center"
-              >
-                <FaInstagram className="text-black text-2xl" />
-              </a>
-            </DockIcon>
+            <FaFacebookF className="text-black text-xl" />
+          </a>
+        </DockIcon>
 
-            {/* 分隔線 */}
-            <div className="h-8 w-[1px] bg-gray-300 mx-2" />
+        {/* Instagram */}
+        <DockIcon>
+          <a 
+            href="https://www.instagram.com/deedeeboy_xoxo" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex h-full w-full items-center justify-center"
+          >
+            <FaInstagram className="text-black text-xl" />
+          </a>
+        </DockIcon>
 
-            {/* 內容創作相關 */}
-            <DockIcon>
-              <a 
-                href="https://www.youtube.com/@DanDee0812" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex h-full w-full items-center justify-center"
-              >
-                <FaYoutube className="text-black text-2xl" />
-              </a>
-            </DockIcon>
-            <DockIcon>
-              <a 
-                href="https://www.tiktok.com/@danieldeeboy_xoxo" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex h-full w-full items-center justify-center"
-              >
-                <FaTiktok className="text-black text-2xl" />
-              </a>
-            </DockIcon>
+        {/* YouTube */}
+        <DockIcon>
+          <a 
+            href="https://www.youtube.com/@DanDee0812" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex h-full w-full items-center justify-center"
+          >
+            <FaYoutube className="text-black text-xl" />
+          </a>
+        </DockIcon>
 
-            {/* 分隔線 */}
-            <div className="h-8 w-[1px] bg-gray-300 mx-2" />
+        {/* Email */}
+        <DockIcon>
+          <a 
+            href="mailto:example@email.com"
+            className="flex h-full w-full items-center justify-center"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+            </svg>
+          </a>
+        </DockIcon>
 
-            {/* 通訊工具相關 */}
-            <DockIcon>
-              <a 
-                href="https://wa.me/886970737011" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex h-full w-full items-center justify-center"
-              >
-                <FaWhatsapp className="text-black text-2xl" />
-              </a>
-            </DockIcon>
-            <DockIcon>
-              <a 
-                href="https://line.me/ti/p/@dee0917" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex h-full w-full items-center justify-center"
-              >
-                <SiLine className="text-black text-2xl" />
-              </a>
-            </DockIcon>
-            <DockIcon>
-              <a 
-                href="#" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex h-full w-full items-center justify-center"
-              >
-                <FaTelegram className="text-black text-2xl" />
-              </a>
-            </DockIcon>
-          </Dock>
-        </div>
-      </div>
+        {/* 更多選項 */}
+        <DockIcon>
+          <button className="flex h-full w-full items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+            </svg>
+          </button>
+        </DockIcon>
+      </Dock>
     </div>
   )
 } 
