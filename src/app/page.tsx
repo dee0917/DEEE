@@ -148,65 +148,74 @@ export default function Home() {
       </main>
 
       {/* 垂直社交媒體 Dock */}
-      <Dock 
-        magnification={DEFAULT_MAGNIFICATION}
-        distance={DEFAULT_DISTANCE}
-      >
+      <Dock>
         {/* Facebook */}
         <DockIcon>
-          <a 
+          <motion.a 
             href="https://www.facebook.com/dee.chen3" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="flex h-full w-full items-center justify-center"
+            className="flex h-full w-full items-center justify-center text-black hover:text-[#1877f2] transition-colors duration-200"
+            whileHover={{ y: -4 }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
-            <FaFacebookF className="text-black text-xl" />
-          </a>
+            <FaFacebookF className="text-xl" />
+          </motion.a>
         </DockIcon>
 
         {/* Instagram */}
         <DockIcon>
-          <a 
+          <motion.a 
             href="https://www.instagram.com/deedeeboy_xoxo" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="flex h-full w-full items-center justify-center"
+            className="flex h-full w-full items-center justify-center text-black hover:text-[#E4405F] transition-colors duration-200"
+            whileHover={{ y: -4 }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
-            <FaInstagram className="text-black text-xl" />
-          </a>
+            <FaInstagram className="text-xl" />
+          </motion.a>
         </DockIcon>
 
         {/* YouTube */}
         <DockIcon>
-          <a 
+          <motion.a 
             href="https://www.youtube.com/@DanDee0812" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="flex h-full w-full items-center justify-center"
+            className="flex h-full w-full items-center justify-center text-black hover:text-[#FF0000] transition-colors duration-200"
+            whileHover={{ y: -4 }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
-            <FaYoutube className="text-black text-xl" />
-          </a>
+            <FaYoutube className="text-xl" />
+          </motion.a>
         </DockIcon>
 
         {/* Email */}
         <DockIcon>
-          <a 
+          <motion.a 
             href="mailto:example@email.com"
-            className="flex h-full w-full items-center justify-center"
+            className="flex h-full w-full items-center justify-center text-black hover:text-[#EA4335] transition-colors duration-200"
+            whileHover={{ y: -4 }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
               <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
             </svg>
-          </a>
+          </motion.a>
         </DockIcon>
 
         {/* 更多選項 */}
         <DockIcon>
-          <button className="flex h-full w-full items-center justify-center">
+          <motion.button 
+            className="flex h-full w-full items-center justify-center text-black hover:text-gray-900 transition-colors duration-200"
+            whileHover={{ y: -4 }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+          >
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
             </svg>
-          </button>
+          </motion.button>
         </DockIcon>
       </Dock>
     </div>
