@@ -9,6 +9,7 @@ import { Dock, DockIcon, DEFAULT_MAGNIFICATION, DEFAULT_DISTANCE } from '@/compo
 import { motion } from 'framer-motion'
 import { RetroGrid } from '@/components/ui/retro-grid'
 import { useState } from 'react'
+import { SocialModal } from '@/components/ui/social-modal'
 
 // 定義 NavLink 組件的 props 類型
 interface NavLinkProps {
@@ -36,6 +37,7 @@ const NavLink = ({ children, href = "#" }: NavLinkProps) => (
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSocialModalOpen, setIsSocialModalOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-gray-50 relative overflow-hidden">
@@ -134,11 +136,55 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 標語 - 保持原位 */}
-            <div className="absolute right-[-180px] top-[45%] -translate-y-1/2 z-20">
-              <h1 className="text-7xl font-bold text-right leading-[0.9]">
-                less is<br />more.
-              </h1>
+            {/* 標語 - 新的動畫效果 */}
+            <div className="absolute right-[-120px] top-[45%] -translate-y-1/2 z-20">
+              <motion.h1 
+                className="text-7xl font-bold text-right leading-[0.9] relative group"
+              >
+                <motion.div
+                  className="relative"
+                  whileHover={{
+                    scale: 1.05,
+                    transition: { duration: 0.3 }
+                  }}
+                >
+                  <motion.span 
+                    className="block relative"
+                    whileHover={{
+                      x: -10,
+                      transition: { type: "spring", stiffness: 300, damping: 10 }
+                    }}
+                  >
+                    <span className="absolute inset-0 bg-gradient-to-r from-rose-500/0 to-indigo-600/0 
+                      group-hover:from-rose-500/5 group-hover:to-indigo-600/5 
+                      blur-xl transition-all duration-300 -z-10" 
+                    />
+                    Dee
+                  </motion.span>
+                </motion.div>
+                
+                <motion.div
+                  className="relative"
+                  whileHover={{
+                    scale: 1.05,
+                    transition: { duration: 0.3 }
+                  }}
+                >
+                  <motion.span 
+                    className="block relative"
+                    whileHover={{
+                      x: -10,
+                      transition: { type: "spring", stiffness: 300, damping: 10 }
+                    }}
+                  >
+                    <span className="absolute inset-0 bg-gradient-to-r from-rose-500/0 to-indigo-600/0 
+                      group-hover:from-rose-500/5 group-hover:to-indigo-600/5 
+                      blur-xl transition-all duration-300 -z-10" 
+                    />
+                    Chen.
+                  </motion.span>
+                </motion.div>
+              </motion.h1>
             </div>
           </div>
 
@@ -208,6 +254,7 @@ export default function Home() {
         {/* 更多選項 */}
         <DockIcon>
           <motion.button 
+            onClick={() => setIsSocialModalOpen(true)}
             className="flex h-full w-full items-center justify-center text-black hover:text-gray-900 transition-colors duration-200"
             whileHover={{ y: -4 }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
@@ -218,6 +265,12 @@ export default function Home() {
           </motion.button>
         </DockIcon>
       </Dock>
+
+      {/* 社群媒體彈出視窗 */}
+      <SocialModal 
+        isOpen={isSocialModalOpen} 
+        onClose={() => setIsSocialModalOpen(false)} 
+      />
     </div>
   )
 } 
