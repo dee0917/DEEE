@@ -10,6 +10,8 @@ import { motion } from 'framer-motion'
 import { RetroGrid } from '@/components/ui/retro-grid'
 import { useState } from 'react'
 import { SocialModal } from '@/components/ui/social-modal'
+import { SideMenu } from '@/components/ui/side-menu'
+import { EmailModal } from '@/components/ui/email-modal'
 
 // 定義 NavLink 組件的 props 類型
 interface NavLinkProps {
@@ -26,10 +28,14 @@ const NavLink = ({ children, href = "#" }: NavLinkProps) => (
     className="relative px-3 py-1 group transition-colors duration-300 hover:text-gray-600"
   >
     {/* 背景動畫效果 */}
-    <span className="absolute inset-0 w-full h-0.5 bg-gradient-to-r from-violet-500 to-fuchsia-500 opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out bottom-0 group-hover:h-full -z-10 rounded-md" />
+    <span className="absolute inset-0 w-full h-0.5 bg-gradient-to-r from-violet-500 to-fuchsia-500 opacity-0 
+      group-hover:opacity-100 transition-all duration-300 ease-out bottom-0 group-hover:h-full -z-10 rounded-md" 
+    />
     
-    {/* 文字 */}
-    <span className="relative z-10 transition-colors duration-300 group-hover:text-white">
+    {/* 文字 - 更新字體和樣式 */}
+    <span className="relative z-10 transition-colors duration-300 group-hover:text-white
+      font-['Montserrat'] tracking-wide text-sm font-semibold"
+    >
       {children}
     </span>
   </a>
@@ -38,6 +44,7 @@ const NavLink = ({ children, href = "#" }: NavLinkProps) => (
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSocialModalOpen, setIsSocialModalOpen] = useState(false);
+  const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-gray-50 relative overflow-hidden">
@@ -47,10 +54,38 @@ export default function Home() {
       {/* 導航欄 */}
       <nav className="py-6 relative z-10">
         <div className="max-w-[1400px] mx-auto flex justify-center items-center relative">
-          {/* Logo - 絕對定位到左側 */}
-          <div className="absolute left-8 text-2xl font-bold tracking-tight">
-            SkMswDee.
-          </div>
+          {/* Logo - 添加動畫和連結 */}
+          <motion.div 
+            className="absolute left-8 z-10"
+            whileHover={{ 
+              scale: 1.02,
+              transition: { duration: 0.2 }
+            }}
+          >
+            <motion.a
+              href="/"
+              className="relative group inline-block"
+              whileTap={{ scale: 0.95 }}
+            >
+              <span className="text-2xl font-black tracking-tighter text-black 
+                font-['Montserrat'] relative z-10 group-hover:tracking-normal transition-all duration-300"
+              >
+                SkMsw
+                <span className="text-black font-['Montserrat'] font-black">
+                  Dee
+                </span>
+                <span className="text-black opacity-90">.</span>
+              </span>
+              <motion.span
+                className="absolute inset-0 bg-gradient-to-r from-rose-500/0 via-fuchsia-500/0 to-indigo-500/0
+                  group-hover:from-rose-500/5 group-hover:via-fuchsia-500/5 group-hover:to-indigo-500/5
+                  blur-lg -z-10"
+                initial={{ opacity: 0 }}
+                whileHover={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+              />
+            </motion.a>
+          </motion.div>
           
           {/* 導航連結 - 居中對齊，使用 -ml-21 */}
           <div className="flex gap-12 text-sm -ml-21">
@@ -63,7 +98,8 @@ export default function Home() {
           {/* 選單按鈕 - 絕對定位到右側 */}
           <button 
             onClick={() => setIsMenuOpen(true)}
-            className="absolute right-8 text-2xl hover:opacity-70 transition-opacity"
+            className="absolute right-8 text-2xl hover:opacity-70 transition-opacity
+                     hover:scale-110 transform duration-200"
           >
             ≡
           </button>
@@ -136,10 +172,10 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 標語 - 新的動畫效果 */}
+            {/* 標語 - 使用與導航列一致的字體 */}
             <div className="absolute right-[-120px] top-[45%] -translate-y-1/2 z-20">
               <motion.h1 
-                className="text-7xl font-bold text-right leading-[0.9] relative group"
+                className="text-7xl text-right leading-[0.9] relative group"
               >
                 <motion.div
                   className="relative"
@@ -149,7 +185,7 @@ export default function Home() {
                   }}
                 >
                   <motion.span 
-                    className="block relative"
+                    className="block relative font-['Montserrat'] font-semibold tracking-wide"
                     whileHover={{
                       x: -10,
                       transition: { type: "spring", stiffness: 300, damping: 10 }
@@ -171,7 +207,7 @@ export default function Home() {
                   }}
                 >
                   <motion.span 
-                    className="block relative"
+                    className="block relative font-['Montserrat'] font-semibold tracking-wide"
                     whileHover={{
                       x: -10,
                       transition: { type: "spring", stiffness: 300, damping: 10 }
@@ -181,7 +217,8 @@ export default function Home() {
                       group-hover:from-rose-500/5 group-hover:to-indigo-600/5 
                       blur-xl transition-all duration-300 -z-10" 
                     />
-                    Chen.
+                    Chen
+                    <span className="font-['Montserrat'] font-semibold">.</span>
                   </motion.span>
                 </motion.div>
               </motion.h1>
@@ -239,8 +276,8 @@ export default function Home() {
 
         {/* Email */}
         <DockIcon>
-          <motion.a 
-            href="mailto:example@email.com"
+          <motion.button 
+            onClick={() => setIsEmailModalOpen(true)}
             className="flex h-full w-full items-center justify-center text-black hover:text-[#EA4335] transition-colors duration-200"
             whileHover={{ y: -4 }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
@@ -248,7 +285,7 @@ export default function Home() {
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
               <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
             </svg>
-          </motion.a>
+          </motion.button>
         </DockIcon>
 
         {/* 更多選項 */}
@@ -270,6 +307,19 @@ export default function Home() {
       <SocialModal 
         isOpen={isSocialModalOpen} 
         onClose={() => setIsSocialModalOpen(false)} 
+      />
+
+      {/* 側邊選單 */}
+      <SideMenu 
+        isOpen={isMenuOpen} 
+        onClose={() => setIsMenuOpen(false)} 
+      />
+
+      {/* Email Modal */}
+      <EmailModal 
+        isOpen={isEmailModalOpen}
+        onClose={() => setIsEmailModalOpen(false)}
+        email="h09171209@gmail.com"
       />
     </div>
   )
