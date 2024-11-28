@@ -12,6 +12,9 @@ import { useState } from 'react'
 import { SocialModal } from '@/components/ui/social-modal'
 import { SideMenu } from '@/components/ui/side-menu'
 import { EmailModal } from '@/components/ui/email-modal'
+import { ContactModal } from '@/components/ui/contact-modal'
+import { AboutModal } from '@/components/ui/about-modal'
+import { PortfolioModal } from '@/components/ui/portfolio-modal'
 
 // 定義 NavLink 組件的 props 類型
 interface NavLinkProps {
@@ -45,6 +48,9 @@ export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSocialModalOpen, setIsSocialModalOpen] = useState(false);
   const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
+  const [isPortfolioModalOpen, setIsPortfolioModalOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-gray-50 relative overflow-hidden">
@@ -54,9 +60,9 @@ export default function Home() {
       {/* 導航欄 */}
       <nav className="py-6 relative z-10">
         <div className="max-w-[1400px] mx-auto flex justify-center items-center relative">
-          {/* Logo - 添加動畫和連結 */}
+          {/* Logo */}
           <motion.div 
-            className="absolute left-8 z-10"
+            className="absolute left-4 md:left-8 z-10"
             whileHover={{ 
               scale: 1.02,
               transition: { duration: 0.2 }
@@ -67,7 +73,7 @@ export default function Home() {
               className="relative group inline-block"
               whileTap={{ scale: 0.95 }}
             >
-              <span className="text-2xl font-black tracking-tighter text-black 
+              <span className="text-xl md:text-2xl font-black tracking-tighter text-black 
                 font-['Montserrat'] relative z-10 group-hover:tracking-normal transition-all duration-300"
               >
                 SkMsw
@@ -87,18 +93,49 @@ export default function Home() {
             </motion.a>
           </motion.div>
           
-          {/* 導航連結 - 居中對齊，使用 -ml-21 */}
-          <div className="flex gap-12 text-sm -ml-21">
+          {/* 導航連結 - 在手機上隱藏 */}
+          <div className="hidden md:flex gap-12 text-sm -ml-21">
             <NavLink>HOME</NavLink>
-            <NavLink>PRODUCT</NavLink>
+            <NavLink>
+              <button 
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsPortfolioModalOpen(true);
+                }}
+                className="focus:outline-none"
+              >
+                PRODUCT
+              </button>
+            </NavLink>
             <NavLink href="https://dandeetw.com/index.php?route=common/home">STORE</NavLink>
-            <NavLink>ABOUT ME</NavLink>
+            <NavLink>
+              <button 
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsAboutModalOpen(true);
+                }}
+                className="focus:outline-none"
+              >
+                ABOUT ME
+              </button>
+            </NavLink>
+            <NavLink>
+              <button 
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsContactModalOpen(true);
+                }}
+                className="focus:outline-none"
+              >
+                CONTACT
+              </button>
+            </NavLink>
           </div>
 
-          {/* 選單按鈕 - 絕對定位到右側 */}
+          {/* 選單按鈕 */}
           <button 
             onClick={() => setIsMenuOpen(true)}
-            className="absolute right-8 text-2xl hover:opacity-70 transition-opacity
+            className="absolute right-4 md:right-8 text-2xl hover:opacity-70 transition-opacity
                      hover:scale-110 transform duration-200"
           >
             ≡
@@ -107,21 +144,26 @@ export default function Home() {
       </nav>
 
       {/* 主要內容區 */}
-      <main className="px-8 relative z-10">
-        <div className="max-w-[1400px] mx-auto grid grid-cols-3 gap-8">
-          {/* 左側區域 - 保持空白 */}
-          <div className="flex flex-col justify-start mt-[180px]">
+      <main className="px-4 md:px-8 relative z-10">
+        <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* 左側區域 - 在手機上隱藏 */}
+          <div className="hidden md:flex flex-col justify-start mt-[180px]">
           </div>
 
           {/* 中間圖片區域 */}
-          <div className="relative h-[700px] col-span-1">
-            {/* 強烈現代感圓形背景 - 只調整圓圈的 TOP 值 */}
-            <div className="absolute left-1/2 top-[50%] -translate-x-1/2 -translate-y-1/2 w-[525px] h-[525px] rounded-full bg-gradient-to-r from-rose-500 via-fuchsia-600 to-indigo-600 opacity-95 animate-pulse-strong shadow-[0_0_80px_rgba(219,39,119,0.4)]">
+          <div className="relative h-[500px] md:h-[700px] col-span-1">
+            {/* 強烈現代感圓形背景 */}
+            <div className="absolute left-1/2 top-[50%] -translate-x-1/2 -translate-y-1/2 
+                          w-[300px] h-[300px] md:w-[525px] md:h-[525px] rounded-full 
+                          bg-gradient-to-r from-rose-500 via-fuchsia-600 to-indigo-600 
+                          opacity-95 animate-pulse-strong 
+                          shadow-[0_0_80px_rgba(219,39,119,0.4)]">
               <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/40 via-white/20 to-transparent" />
             </div>
             
             {/* 人物圖片區域 */}
-            <div className="absolute left-[55%] top-[48%] -translate-x-1/2 -translate-y-1/3 w-[500px] h-[650px] z-10 group">
+            <div className="absolute left-[55%] top-[48%] -translate-x-1/2 -translate-y-1/3 
+                          w-[300px] h-[450px] md:w-[500px] md:h-[650px] z-10 group">
               {/* 主圖片 - 彩色底層 */}
               <Image
                 src="/images/profile.png"
@@ -172,10 +214,10 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 標語 - 使用與導航列一致的字體 */}
-            <div className="absolute right-[-120px] top-[45%] -translate-y-1/2 z-20">
+            {/* 標語 */}
+            <div className="absolute right-[-60px] md:right-[-120px] top-[45%] -translate-y-1/2 z-20">
               <motion.h1 
-                className="text-7xl text-right leading-[0.9] relative group"
+                className="text-5xl md:text-7xl text-right leading-[0.9] relative group"
               >
                 <motion.div
                   className="relative"
@@ -225,13 +267,13 @@ export default function Home() {
             </div>
           </div>
 
-          {/* 右側空白區域 */}
-          <div className="col-span-1"></div>
+          {/* 右側空白區域 - 在手機上隱藏 */}
+          <div className="hidden md:block col-span-1"></div>
         </div>
       </main>
 
-      {/* 垂直社交媒體 Dock */}
-      <Dock>
+      {/* 垂直社交媒體 Dock - 在手機上調整位置 */}
+      <Dock className="!left-2 md:!left-8">
         {/* Facebook */}
         <DockIcon>
           <motion.a 
@@ -320,6 +362,24 @@ export default function Home() {
         isOpen={isEmailModalOpen}
         onClose={() => setIsEmailModalOpen(false)}
         email="h09171209@gmail.com"
+      />
+
+      {/* ContactModal */}
+      <ContactModal 
+        isOpen={isContactModalOpen}
+        onClose={() => setIsContactModalOpen(false)}
+      />
+
+      {/* AboutModal */}
+      <AboutModal 
+        isOpen={isAboutModalOpen}
+        onClose={() => setIsAboutModalOpen(false)}
+      />
+
+      {/* PortfolioModal */}
+      <PortfolioModal 
+        isOpen={isPortfolioModalOpen}
+        onClose={() => setIsPortfolioModalOpen(false)}
       />
     </div>
   )

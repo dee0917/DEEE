@@ -9,6 +9,7 @@ import {
 import { IoLocationOutline, IoCopyOutline } from "react-icons/io5";
 import { useState } from 'react';
 import { EmailModal } from './email-modal';
+import { SiWechat } from "react-icons/si";
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -24,14 +25,22 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
       label: "Phone",
       value: "+886970737011",
       action: "複製電話號碼",
-      onClick: () => navigator.clipboard.writeText("+886970737011")
+      href: "#",
+      onClick: (e: React.MouseEvent) => {
+        e.preventDefault();
+        navigator.clipboard.writeText("+886970737011");
+      }
     },
     {
       icon: <FaEnvelope className="text-rose-500" />,
       label: "Email",
       value: "h09171209@gmail.com",
       action: "發送郵件",
-      onClick: () => setIsEmailModalOpen(true)
+      href: "#",
+      onClick: (e: React.MouseEvent) => {
+        e.preventDefault();
+        setIsEmailModalOpen(true);
+      }
     },
     {
       icon: <FaFacebookMessenger className="text-[#1877f2]" />,
@@ -60,6 +69,13 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
       value: "@deedeeboy",
       action: "傳送訊息",
       href: "#"
+    },
+    {
+      icon: <SiWechat className="text-[#07C160]" />,
+      label: "WeChat",
+      value: "ID: deedeeboy",
+      action: "加入好友",
+      href: "#"
     }
   ];
 
@@ -80,8 +96,9 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
-              className="fixed left-[30%] top-[10%] -translate-x-1/2 -translate-y-1/2 z-50
-                       w-[500px] bg-white/80 backdrop-blur-md rounded-3xl shadow-xl"
+              className="fixed left-[35%] top-[13%] -translate-x-1/2 -translate-y-1/2 z-50
+                       w-[500px] max-h-[600px] bg-white/80 backdrop-blur-md rounded-3xl shadow-xl
+                       flex flex-col"
             >
               {/* 關閉按鈕 */}
               <button
@@ -92,50 +109,29 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                 <IoMdClose size={24} className="text-gray-600" />
               </button>
 
-              {/* 標題 */}
+              {/* 標題 - 固定在頂部 */}
               <div className="p-6 pb-0">
                 <h2 className="text-2xl font-['Montserrat'] font-bold">聯絡我</h2>
                 <p className="text-gray-500 mt-1">選擇您喜歡的聯絡方式</p>
               </div>
 
-              {/* 聯絡方式列表 */}
-              <div className="p-6 space-y-3">
-                {contactMethods.map((method, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    className="group"
-                  >
-                    {method.href ? (
+              {/* 聯絡方式列表 - 可滾動區域 */}
+              <div className="flex-1 overflow-y-auto p-6 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
+                <div className="space-y-3">
+                  {contactMethods.map((method, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      className="group"
+                    >
                       <a
                         href={method.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-between p-4 rounded-2xl
-                                 bg-white/50 hover:bg-white/80 transition-all duration-200"
-                      >
-                        <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 rounded-full bg-gray-100/80 flex items-center justify-center">
-                            {method.icon}
-                          </div>
-                          <div>
-                            <div className="font-medium">{method.label}</div>
-                            <div className="text-sm text-gray-500">{method.value}</div>
-                          </div>
-                        </div>
-                        <motion.span
-                          className="text-sm text-gray-400 group-hover:text-gray-600"
-                          whileHover={{ scale: 1.05 }}
-                        >
-                          {method.action} →
-                        </motion.span>
-                      </a>
-                    ) : (
-                      <button
                         onClick={method.onClick}
-                        className="w-full flex items-center justify-between p-4 rounded-2xl
+                        target={method.href.startsWith("http") ? "_blank" : undefined}
+                        rel={method.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                        className="flex items-center justify-between p-4 rounded-2xl
                                  bg-white/50 hover:bg-white/80 transition-all duration-200"
                       >
                         <div className="flex items-center gap-4">
@@ -151,17 +147,17 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                           className="text-sm text-gray-400 group-hover:text-gray-600 flex items-center gap-1"
                           whileHover={{ scale: 1.05 }}
                         >
-                          <IoCopyOutline />
-                          {method.action}
+                          {method.label === "Phone" && <IoCopyOutline />}
+                          {method.action} {method.label !== "Phone" && "→"}
                         </motion.span>
-                      </button>
-                    )}
-                  </motion.div>
-                ))}
+                      </a>
+                    </motion.div>
+                  ))}
+                </div>
               </div>
 
-              {/* 底部資訊 */}
-              <div className="p-6 pt-0">
+              {/* 底部資訊 - 固定在底部 */}
+              <div className="p-6 pt-3 border-t border-gray-200/50">
                 <div className="flex items-center gap-2 text-sm text-gray-500">
                   <IoLocationOutline />
                   <span>Taiwan</span>
@@ -172,7 +168,6 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
         )}
       </AnimatePresence>
 
-      {/* 添加 EmailModal */}
       <EmailModal 
         isOpen={isEmailModalOpen}
         onClose={() => setIsEmailModalOpen(false)}

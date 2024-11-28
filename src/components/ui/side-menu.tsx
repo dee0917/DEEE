@@ -5,6 +5,7 @@ import { IoMdClose } from "react-icons/io";
 import { FiHome, FiBox, FiShoppingBag, FiUser, FiMail, FiGithub, FiInstagram } from "react-icons/fi";
 import { useState } from 'react';
 import { ContactModal } from './contact-modal';
+import { AboutModal } from './about-modal';
 
 interface SideMenuProps {
   isOpen: boolean;
@@ -18,12 +19,17 @@ const socialLinks = [
 
 export function SideMenu({ isOpen, onClose }: SideMenuProps) {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
 
   const menuItems = [
     { icon: <FiHome />, label: "Home", href: "/" },
     { icon: <FiBox />, label: "Product", href: "/product" },
     { icon: <FiShoppingBag />, label: "Store", href: "https://dandeetw.com" },
-    { icon: <FiUser />, label: "About Me", href: "/about" },
+    { 
+      icon: <FiUser />, 
+      label: "About Me", 
+      onClick: () => setIsAboutModalOpen(true) 
+    },
     { 
       icon: <FiMail />, 
       label: "Contact", 
@@ -100,6 +106,9 @@ export function SideMenu({ isOpen, onClose }: SideMenuProps) {
                       <motion.button
                         key={item.label}
                         onClick={item.onClick}
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.2 + index * 0.1 }}
                         className="w-full flex items-center gap-3 px-4 py-3 text-gray-600 rounded-xl
                                  hover:bg-gray-100/50 transition-colors duration-200 group"
                       >
@@ -144,7 +153,19 @@ export function SideMenu({ isOpen, onClose }: SideMenuProps) {
       {/* 聯絡資訊彈窗 */}
       <ContactModal 
         isOpen={isContactModalOpen}
-        onClose={() => setIsContactModalOpen(false)}
+        onClose={() => {
+          setIsContactModalOpen(false);
+          onClose();
+        }}
+      />
+
+      {/* 添加 About Modal */}
+      <AboutModal 
+        isOpen={isAboutModalOpen}
+        onClose={() => {
+          setIsAboutModalOpen(false);
+          onClose();
+        }}
       />
     </>
   );
