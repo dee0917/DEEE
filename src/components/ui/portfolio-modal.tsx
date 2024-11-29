@@ -8,7 +8,9 @@ import {
   IoTimeOutline,
   IoEyeOutline,
   IoHeartOutline,
-  IoShareSocialOutline
+  IoShareSocialOutline,
+  IoDiamondOutline,
+  IoVideocamOutline
 } from "react-icons/io5";
 import { useState } from "react";
 
@@ -67,8 +69,9 @@ export function PortfolioModal({ isOpen, onClose }: PortfolioModalProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="fixed left-[15%] top-[10%] -translate-x-1/2 -translate-y-1/2 z-50
-                     w-[90vw] max-w-[1200px] h-[80vh] bg-white/80 backdrop-blur-md rounded-3xl shadow-xl
+            className="absolute left-[15%] top-[10%] -translate-x-1/2 -translate-y-1/3 z-50
+                     w-[80vw] md:w-[70vw] max-w-[1000px] h-[80vh] md:h-[70vh] 
+                     bg-white/80 backdrop-blur-md rounded-3xl shadow-xl
                      flex flex-col overflow-hidden"
           >
             {/* 關閉按鈕 */}
@@ -81,11 +84,20 @@ export function PortfolioModal({ isOpen, onClose }: PortfolioModalProps) {
             </button>
 
             {/* 頂部背景裝飾 */}
-            <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-br from-rose-500/20 via-fuchsia-500/20 to-indigo-500/20" />
+            <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-br from-rose-500/20 via-fuchsia-500/20 to-indigo-500/20" />
 
             {/* 標題區域 */}
             <div className="relative p-8 text-center">
-              <h2 className="text-3xl font-['Montserrat'] font-bold">作品集</h2>
+              <motion.div
+                initial={{ scale: 0.5, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.2 }}
+                className="w-24 h-24 rounded-full bg-gradient-to-br from-rose-500 to-indigo-500 shadow-lg mx-auto mb-4
+                         flex items-center justify-center text-white"
+              >
+                <IoVideocamOutline className="text-4xl" />
+              </motion.div>
+              <h2 className="text-2xl font-['Montserrat'] font-bold">作品集</h2>
               <p className="text-gray-500 mt-2">探索我的舞蹈世界</p>
 
               {/* 分類切換 */}
@@ -94,8 +106,8 @@ export function PortfolioModal({ isOpen, onClose }: PortfolioModalProps) {
                   onClick={() => setActiveCategory("creation")}
                   className={`px-6 py-2 rounded-full font-medium transition-colors
                     ${activeCategory === "creation" 
-                      ? "bg-black text-white" 
-                      : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}
+                      ? "bg-gradient-to-r from-rose-500 to-indigo-500 text-white" 
+                      : "bg-white/50 text-gray-600 hover:bg-white/80"}`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -105,8 +117,8 @@ export function PortfolioModal({ isOpen, onClose }: PortfolioModalProps) {
                   onClick={() => setActiveCategory("performance")}
                   className={`px-6 py-2 rounded-full font-medium transition-colors
                     ${activeCategory === "performance" 
-                      ? "bg-black text-white" 
-                      : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}
+                      ? "bg-gradient-to-r from-rose-500 to-indigo-500 text-white" 
+                      : "bg-white/50 text-gray-600 hover:bg-white/80"}`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -115,9 +127,9 @@ export function PortfolioModal({ isOpen, onClose }: PortfolioModalProps) {
               </div>
             </div>
 
-            {/* 視頻網格 */}
-            <div className="flex-1 overflow-y-auto px-8 pb-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* 視頻網格 - 調整內邊距 */}
+            <div className="flex-1 overflow-y-auto px-4 md:px-6 pb-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {videos
                   .filter(video => video.category === activeCategory)
                   .map((video, index) => (
@@ -131,7 +143,8 @@ export function PortfolioModal({ isOpen, onClose }: PortfolioModalProps) {
                       {/* 視頻卡片 */}
                       <motion.div
                         whileHover={{ y: -5 }}
-                        className="relative rounded-2xl overflow-hidden bg-white/50 shadow-lg"
+                        className="relative rounded-2xl overflow-hidden bg-white/50 shadow-lg
+                                 hover:shadow-xl transition-all duration-300"
                       >
                         {/* 縮略圖 */}
                         <div className="relative aspect-video">
@@ -167,7 +180,9 @@ export function PortfolioModal({ isOpen, onClose }: PortfolioModalProps) {
 
                         {/* 視頻信息 */}
                         <div className="p-4">
-                          <h3 className="font-medium text-lg mb-1">{video.title}</h3>
+                          <h3 className="font-['Montserrat'] font-semibold text-lg mb-1">
+                            {video.title}
+                          </h3>
                           <p className="text-gray-500 text-sm line-clamp-2">
                             {video.description}
                           </p>
