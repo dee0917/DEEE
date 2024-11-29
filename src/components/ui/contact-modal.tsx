@@ -54,7 +54,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
       label: "Line",
       value: "ID: deedeeboy",
       action: "加入好友",
-      href: "#"
+      href: "https://line.me/ti/p/KLkLx4ETSt"
     },
     {
       icon: <FaWhatsapp className="text-[#25D366]" />,
@@ -68,14 +68,14 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
       label: "Telegram",
       value: "@deedeeboy",
       action: "傳送訊息",
-      href: "#"
+      href: "https://t.me/+886970737011"
     },
     {
       icon: <SiWechat className="text-[#07C160]" />,
       label: "WeChat",
-      value: "ID: deedeeboy",
+      value: "ID: DEE0917",
       action: "加入好友",
-      href: "#"
+      href: "weixin://dl/chat?DEE0917"
     }
   ];
 

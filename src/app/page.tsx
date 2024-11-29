@@ -231,10 +231,20 @@ export default function Home() {
                         x: `${Math.random() * 100}%`,
                         y: `${Math.random() * 100}%`,
                         transition: {
-                          duration: 2 + Math.random() * 3,
+                          duration: 5,
                           repeat: Infinity,
-                          repeatType: "mirror",
-                          ease: "linear"
+                          repeatType: "reverse",
+                          ease: "linear",
+                          x: {
+                            duration: 5,
+                            repeat: Infinity,
+                            repeatType: "reverse"
+                          },
+                          y: {
+                            duration: 5,
+                            repeat: Infinity,
+                            repeatType: "reverse"
+                          }
                         }
                       }}
                     />

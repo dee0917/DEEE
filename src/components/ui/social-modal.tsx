@@ -18,10 +18,10 @@ export function SocialModal({ isOpen, onClose }: SocialModalProps) {
     { icon: <FaInstagram className="text-[#E4405F]" />, name: 'Instagram', href: 'https://www.instagram.com/deedeeboy_xoxo' },
     { icon: <FaYoutube className="text-[#FF0000]" />, name: 'YouTube', href: 'https://www.youtube.com/@DanDee0812' },
     { icon: <FaTiktok />, name: 'TikTok', href: '#' },
-    { icon: <SiLine className="text-[#00B900]" />, name: 'Line', href: '#' },
-    { icon: <FaWhatsapp className="text-[#25D366]" />, name: 'WhatsApp', href: '#' },
+    { icon: <SiLine className="text-[#00B900]" />, name: 'Line', href: 'https://line.me/ti/p/KLkLx4ETSt' },
+    { icon: <FaWhatsapp className="text-[#25D366]" />, name: 'WhatsApp', href: 'https://wa.me/886970737011' },
     { icon: <IoStorefrontOutline className="text-purple-600" />, name: 'Store', href: '#' },
-    { icon: <SiWechat className="text-[#07C160]" />, name: 'WeChat', href: '#' },
+    { icon: <SiWechat className="text-[#07C160]" />, name: 'WeChat', href: "weixin://dl/chat?DEE0917" },
   ];
 
   return (
