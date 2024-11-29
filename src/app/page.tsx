@@ -54,20 +54,12 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-50 relative overflow-hidden">
-      {/* 背景動畫 */}
-      <RetroGrid className="fixed inset-0 z-0" />
-
       {/* 導航欄 */}
       <nav className="py-6 relative z-10">
-        <div className="max-w-[1400px] mx-auto flex justify-center items-center relative">
+        {/* 桌面版導航 */}
+        <div className="hidden md:flex max-w-[1400px] mx-auto justify-center items-center relative">
           {/* Logo */}
-          <motion.div 
-            className="absolute left-4 md:left-8 z-10"
-            whileHover={{ 
-              scale: 1.02,
-              transition: { duration: 0.2 }
-            }}
-          >
+          <motion.div className="absolute left-8 z-10">
             <motion.a
               href="/"
               className="relative group inline-block"
@@ -93,50 +85,61 @@ export default function Home() {
             </motion.a>
           </motion.div>
           
-          {/* 導航連結 - 在手機上隱藏 */}
-          <div className="hidden md:flex gap-12 text-sm -ml-21">
+          {/* 導航連結 */}
+          <div className="flex gap-12 text-sm -ml-21">
             <NavLink>HOME</NavLink>
             <NavLink>
-              <button 
-                onClick={(e) => {
-                  e.preventDefault();
-                  setIsPortfolioModalOpen(true);
-                }}
-                className="focus:outline-none"
-              >
+              <button onClick={() => setIsPortfolioModalOpen(true)}>
                 PRODUCT
               </button>
             </NavLink>
-            <NavLink href="https://dandeetw.com/index.php?route=common/home">STORE</NavLink>
+            <NavLink href="https://dandeetw.com">STORE</NavLink>
             <NavLink>
-              <button 
-                onClick={(e) => {
-                  e.preventDefault();
-                  setIsAboutModalOpen(true);
-                }}
-                className="focus:outline-none"
-              >
+              <button onClick={() => setIsAboutModalOpen(true)}>
                 ABOUT ME
               </button>
             </NavLink>
             <NavLink>
-              <button 
-                onClick={(e) => {
-                  e.preventDefault();
-                  setIsContactModalOpen(true);
-                }}
-                className="focus:outline-none"
-              >
+              <button onClick={() => setIsContactModalOpen(true)}>
                 CONTACT
               </button>
             </NavLink>
           </div>
+        </div>
 
-          {/* 選單按鈕 */}
+        {/* 手機版導航 */}
+        <div className="md:hidden flex justify-between items-center px-4">
+          {/* 手機版 Logo */}
+          <motion.div className="z-10">
+            <motion.a
+              href="/"
+              className="relative group inline-block"
+              whileTap={{ scale: 0.95 }}
+            >
+              <span className="text-xl md:text-2xl font-black tracking-tighter text-black 
+                font-['Montserrat'] relative z-10 group-hover:tracking-normal transition-all duration-300"
+              >
+                SkMsw
+                <span className="text-black font-['Montserrat'] font-black">
+                  Dee
+                </span>
+                <span className="text-black opacity-90">.</span>
+              </span>
+              <motion.span
+                className="absolute inset-0 bg-gradient-to-r from-rose-500/0 via-fuchsia-500/0 to-indigo-500/0
+                  group-hover:from-rose-500/5 group-hover:via-fuchsia-500/5 group-hover:to-indigo-500/5
+                  blur-lg -z-10"
+                initial={{ opacity: 0 }}
+                whileHover={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+              />
+            </motion.a>
+          </motion.div>
+          
+          {/* 手機版選單按鈕 */}
           <button 
             onClick={() => setIsMenuOpen(true)}
-            className="absolute right-4 md:right-8 text-2xl hover:opacity-70 transition-opacity
-                     hover:scale-110 transform duration-200"
+            className="text-2xl hover:opacity-70 transition-opacity"
           >
             ≡
           </button>
@@ -145,134 +148,256 @@ export default function Home() {
 
       {/* 主要內容區 */}
       <main className="px-4 md:px-8 relative z-10">
-        <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* 左側區域 - 在手機上隱藏 */}
-          <div className="hidden md:flex flex-col justify-start mt-[180px]">
-          </div>
-
-          {/* 中間圖片區域 */}
-          <div className="relative h-[500px] md:h-[700px] col-span-1">
-            {/* 強烈現代感圓形背景 */}
-            <div className="absolute left-1/2 top-[50%] -translate-x-1/2 -translate-y-1/2 
-                          w-[300px] h-[300px] md:w-[525px] md:h-[525px] rounded-full 
-                          bg-gradient-to-r from-rose-500 via-fuchsia-600 to-indigo-600 
-                          opacity-95 animate-pulse-strong 
-                          shadow-[0_0_80px_rgba(219,39,119,0.4)]">
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/40 via-white/20 to-transparent" />
+        <div className="max-w-[1400px] mx-auto">
+          {/* 桌面版佈局 */}
+          <div className="hidden md:grid grid-cols-3 gap-8">
+            {/* 左側區域 */}
+            <div className="flex flex-col justify-start mt-[180px]">
             </div>
-            
-            {/* 人物圖片區域 */}
-            <div className="absolute left-[55%] top-[48%] -translate-x-1/2 -translate-y-1/3 
-                          w-[300px] h-[450px] md:w-[500px] md:h-[650px] z-10 group">
-              {/* 主圖片 - 彩色底層 */}
-              <Image
-                src="/images/profile.png"
-                alt="Profile"
-                fill
-                priority
-                className="object-contain transform transition-all duration-1000 ease-out scale-100 group-hover:scale-105"
-              />
+
+            {/* 中間圖片區域 - 桌面版 */}
+            <div className="relative h-[700px] col-span-1">
+              {/* 強烈現代感圓形背景 */}
+              <div className="absolute left-1/2 top-[50%] -translate-x-1/2 -translate-y-1/2 
+                            w-[300px] h-[300px] md:w-[525px] md:h-[525px] rounded-full 
+                            bg-gradient-to-r from-rose-500 via-fuchsia-600 to-indigo-600 
+                            opacity-95 animate-pulse-strong 
+                            shadow-[0_0_80px_rgba(219,39,119,0.4)]">
+                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/40 via-white/20 to-transparent" />
+              </div>
               
-              {/* 黑白圖層 - 使用 clip-path 效果 */}
-              <div className="absolute inset-0 transition-all duration-1000 ease-in-out group-hover:[clip-path:circle(0%_at_50%_50%)] [clip-path:circle(100%_at_50%_50%)]">
+              {/* 人物圖片區域 */}
+              <div className="absolute left-[55%] top-[48%] -translate-x-1/2 -translate-y-1/3 
+                            w-[300px] h-[450px] md:w-[500px] md:h-[650px] z-10 group">
+                {/* 主圖片 - 彩色底層 */}
                 <Image
                   src="/images/profile.png"
                   alt="Profile"
                   fill
                   priority
-                  className="grayscale contrast-125 object-contain"
+                  className="object-contain transform transition-all duration-1000 ease-out scale-100 group-hover:scale-105"
                 />
-              </div>
-
-              {/* 動態光環效果 */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000">
-                {/* 內層光環 */}
-                <div className="absolute inset-0 animate-pulse-fast">
-                  <div className="absolute inset-0 bg-gradient-to-r from-rose-500/0 via-white/10 to-indigo-500/0 blur-2xl" />
-                </div>
                 
-                {/* 外層光環 */}
-                <div className="absolute -inset-4 animate-pulse-slow">
-                  <div className="absolute inset-0 bg-gradient-to-r from-fuchsia-500/0 via-white/5 to-violet-500/0 blur-3xl" />
-                </div>
-              </div>
-
-              {/* 懸浮粒子效果 */}
-              <div className="absolute -inset-10 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 overflow-hidden">
-                {[...Array(20)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="absolute w-1 h-1 bg-white rounded-full animate-float"
-                    style={{
-                      left: `${Math.random() * 100}%`,
-                      top: `${Math.random() * 100}%`,
-                      animationDelay: `${Math.random() * 2}s`,
-                      animationDuration: `${2 + Math.random() * 3}s`
-                    }}
+                {/* 黑白圖層 - 使用 clip-path 效果 */}
+                <div className="absolute inset-0 transition-all duration-1000 ease-in-out group-hover:[clip-path:circle(0%_at_50%_50%)] [clip-path:circle(100%_at_50%_50%)]">
+                  <Image
+                    src="/images/profile.png"
+                    alt="Profile"
+                    fill
+                    priority
+                    className="grayscale contrast-125 object-contain"
                   />
-                ))}
+                </div>
+
+                {/* 動態光環效果 */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000">
+                  {/* 內層光環 */}
+                  <div className="absolute inset-0 animate-pulse-fast">
+                    <div className="absolute inset-0 bg-gradient-to-r from-rose-500/0 via-white/10 to-indigo-500/0 blur-2xl" />
+                  </div>
+                  
+                  {/* 外層光環 */}
+                  <div className="absolute -inset-4 animate-pulse-slow">
+                    <div className="absolute inset-0 bg-gradient-to-r from-fuchsia-500/0 via-white/5 to-violet-500/0 blur-3xl" />
+                  </div>
+                </div>
+
+                {/* 懸浮粒子效果 */}
+                <div className="absolute -inset-10 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 overflow-hidden">
+                  {[...Array(20)].map((_, i) => (
+                    <div
+                      key={i}
+                      className="absolute w-1 h-1 bg-white rounded-full animate-float"
+                      style={{
+                        left: `${Math.random() * 100}%`,
+                        top: `${Math.random() * 100}%`,
+                        animationDelay: `${Math.random() * 2}s`,
+                        animationDuration: `${2 + Math.random() * 3}s`
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* 標語 - 手機版位置調整 */}
+              <div className="absolute right-[-10px] md:right-[-180px] top-[30%] md:top-[45%] -translate-y-1/2 z-20">
+                <motion.h1 
+                  className="text-4xl md:text-7xl text-right leading-[0.9] relative group"
+                >
+                  <motion.div
+                    className="relative"
+                    whileHover={{
+                      scale: 1.05,
+                      transition: { duration: 0.3 }
+                    }}
+                  >
+                    <motion.span 
+                      className="block relative font-['Montserrat'] font-semibold tracking-wide"
+                      whileHover={{
+                        x: -10,
+                        transition: { type: "spring", stiffness: 300, damping: 10 }
+                      }}
+                    >
+                      <span className="absolute inset-0 bg-gradient-to-r from-rose-500/0 to-indigo-600/0 
+                        group-hover:from-rose-500/5 group-hover:to-indigo-600/5 
+                        blur-xl transition-all duration-300 -z-10" 
+                      />
+                      Dee
+                    </motion.span>
+                  </motion.div>
+                  
+                  <motion.div
+                    className="relative"
+                    whileHover={{
+                      scale: 1.05,
+                      transition: { duration: 0.3 }
+                    }}
+                  >
+                    <motion.span 
+                      className="block relative font-['Montserrat'] font-semibold tracking-wide"
+                      whileHover={{
+                        x: -10,
+                        transition: { type: "spring", stiffness: 300, damping: 10 }
+                      }}
+                    >
+                      <span className="absolute inset-0 bg-gradient-to-r from-rose-500/0 to-indigo-600/0 
+                        group-hover:from-rose-500/5 group-hover:to-indigo-600/5 
+                        blur-xl transition-all duration-300 -z-10" 
+                      />
+                      Chen
+                      <span className="font-['Montserrat'] font-semibold">.</span>
+                    </motion.span>
+                  </motion.div>
+                </motion.h1>
               </div>
             </div>
 
-            {/* 標語 */}
-            <div className="absolute right-[-60px] md:right-[-120px] top-[45%] -translate-y-1/2 z-20">
-              <motion.h1 
-                className="text-5xl md:text-7xl text-right leading-[0.9] relative group"
-              >
-                <motion.div
-                  className="relative"
-                  whileHover={{
-                    scale: 1.05,
-                    transition: { duration: 0.3 }
-                  }}
-                >
-                  <motion.span 
-                    className="block relative font-['Montserrat'] font-semibold tracking-wide"
-                    whileHover={{
-                      x: -10,
-                      transition: { type: "spring", stiffness: 300, damping: 10 }
-                    }}
-                  >
-                    <span className="absolute inset-0 bg-gradient-to-r from-rose-500/0 to-indigo-600/0 
-                      group-hover:from-rose-500/5 group-hover:to-indigo-600/5 
-                      blur-xl transition-all duration-300 -z-10" 
-                    />
-                    Dee
-                  </motion.span>
-                </motion.div>
-                
-                <motion.div
-                  className="relative"
-                  whileHover={{
-                    scale: 1.05,
-                    transition: { duration: 0.3 }
-                  }}
-                >
-                  <motion.span 
-                    className="block relative font-['Montserrat'] font-semibold tracking-wide"
-                    whileHover={{
-                      x: -10,
-                      transition: { type: "spring", stiffness: 300, damping: 10 }
-                    }}
-                  >
-                    <span className="absolute inset-0 bg-gradient-to-r from-rose-500/0 to-indigo-600/0 
-                      group-hover:from-rose-500/5 group-hover:to-indigo-600/5 
-                      blur-xl transition-all duration-300 -z-10" 
-                    />
-                    Chen
-                    <span className="font-['Montserrat'] font-semibold">.</span>
-                  </motion.span>
-                </motion.div>
-              </motion.h1>
-            </div>
+            {/* 右側空白區域 - 在手機上隱藏 */}
+            <div className="hidden md:block col-span-1"></div>
           </div>
 
-          {/* 右側空白區域 - 在手機上隱藏 */}
-          <div className="hidden md:block col-span-1"></div>
+          {/* 手機版佈局 */}
+          <div className="md:hidden">
+            {/* 中間圖片區域 - 手機版 */}
+            <div className="relative h-[500px]">
+              {/* 強烈現代感圓形背景 - 手機版 */}
+              <div className="absolute left-1/2 top-[50%] -translate-x-1/2 -translate-y-1/2 
+                            w-[300px] h-[300px] rounded-full 
+                            bg-gradient-to-r from-rose-500 via-fuchsia-600 to-indigo-600 
+                            opacity-95 animate-pulse-strong">
+                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/40 via-white/20 to-transparent" />
+              </div>
+              
+              {/* 人物圖片區域 - 手機版 */}
+              <div className="absolute left-[55%] top-[48%] -translate-x-1/2 -translate-y-1/3 
+                            w-[300px] h-[450px] z-10 group">
+                {/* 主圖片 - 彩色底層 */}
+                <Image
+                  src="/images/profile.png"
+                  alt="Profile"
+                  fill
+                  priority
+                  className="object-contain transform transition-all duration-1000 ease-out scale-100 group-hover:scale-105"
+                />
+                
+                {/* 黑白圖層 - 使用 clip-path 效果 */}
+                <div className="absolute inset-0 transition-all duration-1000 ease-in-out group-hover:[clip-path:circle(0%_at_50%_50%)] [clip-path:circle(100%_at_50%_50%)]">
+                  <Image
+                    src="/images/profile.png"
+                    alt="Profile"
+                    fill
+                    priority
+                    className="grayscale contrast-125 object-contain"
+                  />
+                </div>
+
+                {/* 動態光環效果 */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000">
+                  {/* 內層光環 */}
+                  <div className="absolute inset-0 animate-pulse-fast">
+                    <div className="absolute inset-0 bg-gradient-to-r from-rose-500/0 via-white/10 to-indigo-500/0 blur-2xl" />
+                  </div>
+                  
+                  {/* 外層光環 */}
+                  <div className="absolute -inset-4 animate-pulse-slow">
+                    <div className="absolute inset-0 bg-gradient-to-r from-fuchsia-500/0 via-white/5 to-violet-500/0 blur-3xl" />
+                  </div>
+                </div>
+
+                {/* 懸浮粒子效果 */}
+                <div className="absolute -inset-10 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 overflow-hidden">
+                  {[...Array(20)].map((_, i) => (
+                    <div
+                      key={i}
+                      className="absolute w-1 h-1 bg-white rounded-full animate-float"
+                      style={{
+                        left: `${Math.random() * 100}%`,
+                        top: `${Math.random() * 100}%`,
+                        animationDelay: `${Math.random() * 2}s`,
+                        animationDuration: `${2 + Math.random() * 3}s`
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* 標語 - 手機版 */}
+              <div className="absolute right-[-10px] top-[50%] -translate-y-1/2 z-20">
+                <motion.h1 
+                  className="text-4xl md:text-7xl text-right leading-[0.9] relative group"
+                >
+                  <motion.div
+                    className="relative"
+                    whileHover={{
+                      scale: 1.05,
+                      transition: { duration: 0.3 }
+                    }}
+                  >
+                    <motion.span 
+                      className="block relative font-['Montserrat'] font-semibold tracking-wide"
+                      whileHover={{
+                        x: -10,
+                        transition: { type: "spring", stiffness: 300, damping: 10 }
+                      }}
+                    >
+                      <span className="absolute inset-0 bg-gradient-to-r from-rose-500/0 to-indigo-600/0 
+                        group-hover:from-rose-500/5 group-hover:to-indigo-600/5 
+                        blur-xl transition-all duration-300 -z-10" 
+                      />
+                      Dee
+                    </motion.span>
+                  </motion.div>
+                  
+                  <motion.div
+                    className="relative"
+                    whileHover={{
+                      scale: 1.05,
+                      transition: { duration: 0.3 }
+                    }}
+                  >
+                    <motion.span 
+                      className="block relative font-['Montserrat'] font-semibold tracking-wide"
+                      whileHover={{
+                        x: -10,
+                        transition: { type: "spring", stiffness: 300, damping: 10 }
+                      }}
+                    >
+                      <span className="absolute inset-0 bg-gradient-to-r from-rose-500/0 to-indigo-600/0 
+                        group-hover:from-rose-500/5 group-hover:to-indigo-600/5 
+                        blur-xl transition-all duration-300 -z-10" 
+                      />
+                      Chen
+                      <span className="font-['Montserrat'] font-semibold">.</span>
+                    </motion.span>
+                  </motion.div>
+                </motion.h1>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
 
-      {/* 垂直社交媒體 Dock - 在手機上調整位置 */}
+      {/* 社交媒體 Dock */}
       <Dock className="!left-2 md:!left-8">
         {/* Facebook */}
         <DockIcon>

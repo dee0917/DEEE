@@ -6,6 +6,7 @@ import { FiHome, FiBox, FiShoppingBag, FiUser, FiMail, FiGithub, FiInstagram } f
 import { useState } from 'react';
 import { ContactModal } from './contact-modal';
 import { AboutModal } from './about-modal';
+import { PortfolioModal } from './portfolio-modal';
 
 interface SideMenuProps {
   isOpen: boolean;
@@ -20,10 +21,15 @@ const socialLinks = [
 export function SideMenu({ isOpen, onClose }: SideMenuProps) {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
+  const [isPortfolioModalOpen, setIsPortfolioModalOpen] = useState(false);
 
   const menuItems = [
     { icon: <FiHome />, label: "Home", href: "/" },
-    { icon: <FiBox />, label: "Product", href: "/product" },
+    { 
+      icon: <FiBox />, 
+      label: "Product", 
+      onClick: () => setIsPortfolioModalOpen(true) 
+    },
     { icon: <FiShoppingBag />, label: "Store", href: "https://dandeetw.com" },
     { 
       icon: <FiUser />, 
@@ -164,6 +170,15 @@ export function SideMenu({ isOpen, onClose }: SideMenuProps) {
         isOpen={isAboutModalOpen}
         onClose={() => {
           setIsAboutModalOpen(false);
+          onClose();
+        }}
+      />
+
+      {/* 添加 Portfolio Modal */}
+      <PortfolioModal 
+        isOpen={isPortfolioModalOpen}
+        onClose={() => {
+          setIsPortfolioModalOpen(false);
           onClose();
         }}
       />

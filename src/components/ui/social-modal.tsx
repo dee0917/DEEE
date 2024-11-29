@@ -37,14 +37,21 @@ export function SocialModal({ isOpen, onClose }: SocialModalProps) {
             className="fixed inset-0 bg-black/20 backdrop-blur-sm z-50"
           />
           
-          {/* 彈出視窗 */}
+          {/* 社群媒體視窗 */}
           <motion.div
+            drag
+            dragMomentum={false}
+            dragConstraints={{ left: -500, right: 500, top: -300, bottom: 300 }}
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="fixed left-[30%] top-[30%] -translate-x-1/2 -translate-y-1/2 z-50
-                     w-[525px] bg-white/80 backdrop-blur-md rounded-3xl shadow-xl"
+            className="absolute left-[2%] top-[10%] -translate-x-1/2 -translate-y-1/3 z-50
+                     w-[300px] md:w-[525px] bg-white/80 backdrop-blur-md rounded-3xl shadow-xl
+                     cursor-move"
           >
+            {/* 頂部拖動區域 */}
+            <div className="absolute top-0 left-0 right-0 h-12 cursor-move" />
+
             {/* 關閉按鈕 */}
             <button
               onClick={onClose}
