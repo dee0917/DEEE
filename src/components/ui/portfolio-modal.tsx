@@ -41,7 +41,7 @@ export function PortfolioModal({ isOpen, onClose }: PortfolioModalProps) {
       id: "1",
       title: "Urban Dance Choreography",
       description: "原創編舞作品，融合現代街舞元素與個人風格...",
-      thumbnail: "/thumbnails/dance1.jpg", // 需要替換為實際圖片
+      thumbnail: "/images/profile.png", // 暫時使用現有的圖片
       duration: "3:45",
       views: "12.5K",
       likes: "1.2K",

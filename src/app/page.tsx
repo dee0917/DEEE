@@ -8,7 +8,7 @@ import { RainbowButton } from '@/components/ui/rainbow-button'
 import { Dock, DockIcon, DEFAULT_MAGNIFICATION, DEFAULT_DISTANCE } from '@/components/ui/dock'
 import { motion } from 'framer-motion'
 import { RetroGrid } from '@/components/ui/retro-grid'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { SocialModal } from '@/components/ui/social-modal'
 import { SideMenu } from '@/components/ui/side-menu'
 import { EmailModal } from '@/components/ui/email-modal'
@@ -52,8 +52,26 @@ export default function Home() {
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
   const [isPortfolioModalOpen, setIsPortfolioModalOpen] = useState(false);
 
+  useEffect(() => {
+    const particles = document.querySelectorAll('.animate-float');
+    particles.forEach(particle => {
+      const left = Math.random() * 100;
+      const top = Math.random() * 100;
+      const delay = Math.random() * 2;
+      const duration = 2 + Math.random() * 3;
+      
+      (particle as HTMLElement).style.left = `${left}%`;
+      (particle as HTMLElement).style.top = `${top}%`;
+      (particle as HTMLElement).style.animationDelay = `${delay}s`;
+      (particle as HTMLElement).style.animationDuration = `${duration}s`;
+    });
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-50 relative overflow-hidden">
+      {/* 添加 RetroGrid 背景 */}
+      <RetroGrid />
+
       {/* 導航欄 */}
       <nav className="py-6 relative z-10">
         {/* 桌面版導航 */}
@@ -205,14 +223,19 @@ export default function Home() {
                 {/* 懸浮粒子效果 */}
                 <div className="absolute -inset-10 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 overflow-hidden">
                   {[...Array(20)].map((_, i) => (
-                    <div
+                    <motion.div
                       key={i}
-                      className="absolute w-1 h-1 bg-white rounded-full animate-float"
+                      className="absolute w-1 h-1 bg-white rounded-full"
+                      initial={false}
                       style={{
-                        left: `${Math.random() * 100}%`,
-                        top: `${Math.random() * 100}%`,
-                        animationDelay: `${Math.random() * 2}s`,
-                        animationDuration: `${2 + Math.random() * 3}s`
+                        x: `${Math.random() * 100}%`,
+                        y: `${Math.random() * 100}%`,
+                        transition: {
+                          duration: 2 + Math.random() * 3,
+                          repeat: Infinity,
+                          repeatType: "mirror",
+                          ease: "linear"
+                        }
                       }}
                     />
                   ))}
@@ -327,14 +350,19 @@ export default function Home() {
                 {/* 懸浮粒子效果 */}
                 <div className="absolute -inset-10 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 overflow-hidden">
                   {[...Array(20)].map((_, i) => (
-                    <div
+                    <motion.div
                       key={i}
-                      className="absolute w-1 h-1 bg-white rounded-full animate-float"
+                      className="absolute w-1 h-1 bg-white rounded-full"
+                      initial={false}
                       style={{
-                        left: `${Math.random() * 100}%`,
-                        top: `${Math.random() * 100}%`,
-                        animationDelay: `${Math.random() * 2}s`,
-                        animationDuration: `${2 + Math.random() * 3}s`
+                        x: `${Math.random() * 100}%`,
+                        y: `${Math.random() * 100}%`,
+                        transition: {
+                          duration: 2 + Math.random() * 3,
+                          repeat: Infinity,
+                          repeatType: "mirror",
+                          ease: "linear"
+                        }
                       }}
                     />
                   ))}
