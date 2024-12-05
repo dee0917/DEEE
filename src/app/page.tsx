@@ -314,7 +314,7 @@ export default function Home() {
             {/* 中間圖片區域 - 手機版 */}
             <div className="relative h-[500px]">
               {/* 強烈現代感圓形背景 - 手機版 */}
-              <div className="absolute left-1/2 top-[50%] -translate-x-1/2 -translate-y-1/2 
+              <div className="absolute left-1/2 top-[30%] -translate-x-1/2 -translate-y-1/2 
                             w-[300px] h-[300px] rounded-full 
                             bg-gradient-to-r from-rose-500 via-fuchsia-600 to-indigo-600 
                             opacity-95 animate-pulse-strong">
@@ -322,7 +322,7 @@ export default function Home() {
               </div>
               
               {/* 人物圖片區域 - 手機版 */}
-              <div className="absolute left-[55%] top-[48%] -translate-x-1/2 -translate-y-1/3 
+              <div className="absolute left-[55%] top-[30%] -translate-x-1/2 -translate-y-1/3 
                             w-[300px] h-[450px] z-10 group">
                 {/* 主圖片 - 彩色底層 */}
                 <Image
@@ -379,55 +379,40 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* 標語 - 手機版 */}
-              <div className="absolute right-[-10px] top-[50%] -translate-y-1/2 z-20">
+              {/* 標語 - 新位置 */}
+              <div className="absolute left-[49%] bottom-[15%] -translate-x-1/2 z-10 text-center">
                 <motion.h1 
-                  className="text-4xl md:text-7xl text-right leading-[0.9] relative group"
+                  className="text-4xl font-['Montserrat'] font-bold whitespace-nowrap relative"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, ease: "easeOut" }}
                 >
-                  <motion.div
-                    className="relative"
-                    whileHover={{
-                      scale: 1.05,
-                      transition: { duration: 0.3 }
+                  <motion.span
+                    className="inline-block relative"
+                    animate={{ 
+                      color: ["#000", "#FF0080", "#7928CA", "#000"],
+                    }}
+                    transition={{ 
+                      duration: 4,
+                      repeat: Infinity,
+                      repeatType: "reverse"
                     }}
                   >
-                    <motion.span 
-                      className="block relative font-['Montserrat'] font-semibold tracking-wide"
-                      whileHover={{
-                        x: -10,
-                        transition: { type: "spring", stiffness: 300, damping: 10 }
+                    <motion.span
+                      className="absolute -inset-1 bg-gradient-to-r from-rose-500/20 via-fuchsia-500/20 to-indigo-500/20 
+                         blur-lg rounded-lg -z-10"
+                      animate={{ 
+                        opacity: [0, 1, 0],
+                        scale: [0.9, 1.1, 0.9]
                       }}
-                    >
-                      <span className="absolute inset-0 bg-gradient-to-r from-rose-500/0 to-indigo-600/0 
-                        group-hover:from-rose-500/5 group-hover:to-indigo-600/5 
-                        blur-xl transition-all duration-300 -z-10" 
-                      />
-                      Dee
-                    </motion.span>
-                  </motion.div>
-                  
-                  <motion.div
-                    className="relative"
-                    whileHover={{
-                      scale: 1.05,
-                      transition: { duration: 0.3 }
-                    }}
-                  >
-                    <motion.span 
-                      className="block relative font-['Montserrat'] font-semibold tracking-wide"
-                      whileHover={{
-                        x: -10,
-                        transition: { type: "spring", stiffness: 300, damping: 10 }
+                      transition={{ 
+                        duration: 3,
+                        repeat: Infinity,
+                        repeatType: "reverse"
                       }}
-                    >
-                      <span className="absolute inset-0 bg-gradient-to-r from-rose-500/0 to-indigo-600/0 
-                        group-hover:from-rose-500/5 group-hover:to-indigo-600/5 
-                        blur-xl transition-all duration-300 -z-10" 
-                      />
-                      Chen
-                      <span className="font-['Montserrat'] font-semibold">.</span>
-                    </motion.span>
-                  </motion.div>
+                    />
+                    Dee Chen
+                  </motion.span>
                 </motion.h1>
               </div>
             </div>
@@ -435,8 +420,8 @@ export default function Home() {
         </div>
       </main>
 
-      {/* 社交媒體 Dock */}
-      <Dock className="!left-2 md:!left-8">
+      {/* 社交媒體 Dock - 在所有設備上顯示 */}
+      <Dock>
         {/* Facebook */}
         <DockIcon>
           <motion.a 

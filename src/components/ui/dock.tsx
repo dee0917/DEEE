@@ -18,7 +18,7 @@ export const DEFAULT_MAGNIFICATION = 60;
 export const DEFAULT_DISTANCE = 140;
 
 const dockVariants = cva(
-  "supports-backdrop-blur:bg-white/10 supports-backdrop-blur:dark:bg-black/10 flex gap-2 rounded-2xl border backdrop-blur-md",
+  "supports-backdrop-blur:bg-white/10 supports-backdrop-blur:dark:bg-black/10 backdrop-blur-md rounded-2xl border",
 );
 
 const Dock = React.forwardRef<HTMLDivElement, DockProps>(
@@ -35,20 +35,6 @@ const Dock = React.forwardRef<HTMLDivElement, DockProps>(
   ) => {
     const mouseY = useMotionValue(Infinity);
 
-    const renderChildren = () => {
-      return React.Children.map(children, (child) => {
-        if (React.isValidElement(child) && child.type === DockIcon) {
-          return React.cloneElement(child, {
-            ...child.props,
-            mouseY: mouseY,
-            magnification: magnification,
-            distance: distance,
-          });
-        }
-        return child;
-      });
-    };
-
     return (
       <motion.div
         ref={ref}
@@ -57,10 +43,12 @@ const Dock = React.forwardRef<HTMLDivElement, DockProps>(
         {...props}
         className={cn(
           dockVariants({ className }),
-          "fixed left-8 top-1/2 -translate-y-1/2 z-20 flex-col p-3 !h-auto !w-[58px]"
+          "fixed z-20 p-3 transition-all duration-300 flex gap-2",
+          "bottom-5 left-1/2 -translate-x-1/2 flex-row !h-16 !w-auto",
+          "md:left-8 md:top-1/2 md:-translate-y-1/2 md:flex-col md:!h-auto md:!w-[58px]"
         )}
       >
-        {renderChildren()}
+        {children}
       </motion.div>
     );
   },

@@ -102,7 +102,7 @@ export function AboutModal({ isOpen, onClose }: AboutModalProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="absolute left-[2%] top-[10%] -translate-x-1/2 -translate-y-1/3 z-50
+            className="absolute left-[8%] top-[4%] -translate-x-1/2 -translate-y-1/3 z-50
                      w-[300px] h-[450px] md:w-[500px] md:h-[650px]
                      bg-white/80 backdrop-blur-md rounded-3xl shadow-xl
                      flex flex-col overflow-hidden cursor-move"
