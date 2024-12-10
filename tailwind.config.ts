@@ -64,11 +64,13 @@ const config: Config = {
   		animation: {
   			rainbow: 'rainbow var(--speed, 2s) infinite linear',
   			ripple: 'ripple 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-  			grid: "grid 15s linear infinite",
+  			grid: 'grid 15s linear infinite',
   			'pulse-strong': 'pulse-strong 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
   			'pulse-fast': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
   			'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-  			'float': 'float 3s ease-in-out infinite',
+  			float: 'float 3s ease-in-out infinite',
+  			marquee: 'marquee var(--duration) infinite linear',
+  			'marquee-vertical': 'marquee-vertical var(--duration) linear infinite'
   		},
   		keyframes: {
   			rainbow: {
@@ -88,29 +90,49 @@ const config: Config = {
   				}
   			},
   			grid: {
-  				"0%": { transform: "translateY(-50%)" },
-  				"100%": { transform: "translateY(0)" },
+  				'0%': {
+  					transform: 'translateY(-50%)'
+  				},
+  				'100%': {
+  					transform: 'translateY(0)'
+  				}
   			},
   			'pulse-strong': {
-  				'0%, 100%': { 
+  				'0%, 100%': {
   					opacity: '0.95',
   					transform: 'translate(-50%, -50%) scale(1)',
   					filter: 'brightness(1.1) saturate(1.2)'
   				},
-  				'50%': { 
+  				'50%': {
   					opacity: '0.85',
   					transform: 'translate(-50%, -50%) scale(0.97)',
   					filter: 'brightness(0.95) saturate(1)'
-  				},
+  				}
   			},
   			float: {
-  				'0%, 100%': { 
+  				'0%, 100%': {
   					transform: 'translateY(0) scale(1)',
-  					opacity: 0 
+  					opacity: 0
   				},
-  				'50%': { 
+  				'50%': {
   					transform: 'translateY(-20px) scale(1.5)',
-  					opacity: 0.5 
+  					opacity: 0.5
+  				}
+  			},
+  			marquee: {
+  				from: {
+  					transform: 'translateX(0)'
+  				},
+  				to: {
+  					transform: 'translateX(calc(-100% - var(--gap)))'
+  				}
+  			},
+  			'marquee-vertical': {
+  				from: {
+  					transform: 'translateY(0)'
+  				},
+  				to: {
+  					transform: 'translateY(calc(-100% - var(--gap)))'
   				}
   			}
   		}

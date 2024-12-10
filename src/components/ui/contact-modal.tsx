@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
 import { 
   FaPhoneAlt, FaEnvelope, FaFacebookMessenger, 
-  FaLine, FaWhatsapp, FaTelegram 
+  FaLine, FaWhatsapp, FaTelegram, FaInstagram, FaYoutube, FaFacebookF 
 } from "react-icons/fa";
 import { IoLocationOutline, IoCopyOutline } from "react-icons/io5";
 import { useState } from 'react';
@@ -79,6 +79,27 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
     }
   ];
 
+  const mainSocialLinks = [
+    {
+      icon: <FaInstagram className="text-2xl text-[#E4405F]" />,
+      name: "Instagram",
+      href: "https://www.instagram.com/deedeeboy_xoxo",
+      color: "hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500"
+    },
+    {
+      icon: <FaYoutube className="text-2xl text-[#FF0000]" />,
+      name: "YouTube",
+      href: "https://www.youtube.com/@DanDee0812",
+      color: "hover:bg-red-500"
+    },
+    {
+      icon: <FaFacebookF className="text-2xl text-[#1877f2]" />,
+      name: "Facebook",
+      href: "https://www.facebook.com/dee.chen3",
+      color: "hover:bg-blue-500"
+    }
+  ];
+
   return (
     <>
       <AnimatePresence>
@@ -93,30 +114,32 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
             />
             
             <motion.div
-              drag
-              dragMomentum={false}
-              dragConstraints={{ left: -500, right: 500, top: -300, bottom: 300 }}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 100 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              className="absolute left-[2%] top-[10%] -translate-x-1/2 -translate-y-1/3 z-50
-                       w-[300px] md:w-[500px] max-h-[90vh] md:max-h-[600px] 
-                       bg-white/80 backdrop-blur-md rounded-3xl shadow-xl
-                       flex flex-col overflow-hidden cursor-move"
+              exit={{ opacity: 0, y: 100 }}
+              className="fixed bottom-0 md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 z-50 
+                       w-full md:w-[500px] h-[80vh] md:h-[600px]
+                       bg-white rounded-t-[32px] md:rounded-[32px] overflow-hidden
+                       shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.2)]
+                       md:shadow-[0_0_40px_-15px_rgba(0,0,0,0.2)]"
             >
-              <div className="absolute top-0 left-0 right-0 h-12 cursor-move" />
-
-              <button
-                onClick={onClose}
-                className="absolute right-3 md:right-4 top-3 md:top-4 p-2 rounded-full 
-                         hover:bg-gray-100/50 transition-colors duration-200 z-10"
-              >
-                <IoMdClose size={20} className="text-gray-600" />
-              </button>
-
-              <div className="p-6 pb-0">
-                <h2 className="text-2xl font-['Montserrat'] font-bold">聯絡我</h2>
-                <p className="text-gray-500 mt-1">選擇您喜歡的聯絡方式</p>
+              <div className="relative h-14 flex items-center justify-center border-b border-gray-100">
+                <div className="absolute top-2 left-1/2 -translate-x-1/2 w-12 h-1 
+                              bg-gray-300/50 rounded-full" />
+                <motion.h2 
+                  className="text-lg font-bold bg-gradient-to-r from-rose-500 to-indigo-600 
+                           text-transparent bg-clip-text"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                >
+                  聯絡我
+                </motion.h2>
+                <button
+                  onClick={onClose}
+                  className="absolute right-4 text-gray-500 hover:text-gray-700"
+                >
+                  <IoMdClose size={20} />
+                </button>
               </div>
 
               <div className="flex-1 overflow-y-auto p-6 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
@@ -155,6 +178,61 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                         </motion.span>
                       </a>
                     </motion.div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="px-6 py-4 border-t border-gray-100">
+                <div className="flex justify-center gap-6">
+                  {mainSocialLinks.map((link, index) => (
+                    <motion.a
+                      key={index}
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`w-12 h-12 rounded-full flex items-center justify-center
+                                bg-gray-50 ${link.color} group transition-all duration-300
+                                hover:shadow-lg hover:shadow-gray-200/50`}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3 + index * 0.1 }}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <motion.div
+                        className="relative"
+                        whileHover={{
+                          rotate: [0, -10, 10, -10, 10, 0],
+                          transition: { duration: 0.5 }
+                        }}
+                      >
+                        <div className="group-hover:text-white transition-colors duration-300">
+                          {link.icon}
+                        </div>
+
+                        <motion.div className="absolute inset-0 pointer-events-none">
+                          {[...Array(4)].map((_, i) => (
+                            <motion.span
+                              key={i}
+                              className="absolute w-1 h-1 bg-current rounded-full opacity-0"
+                              initial={{ opacity: 0, scale: 0 }}
+                              animate={{
+                                opacity: [0, 0.5, 0],
+                                scale: [0.5, 1.5, 0.5],
+                                x: Math.cos(i * Math.PI / 2) * 15,
+                                y: Math.sin(i * Math.PI / 2) * 15,
+                              }}
+                              transition={{
+                                duration: 1.5,
+                                repeat: Infinity,
+                                delay: i * 0.2,
+                                repeatDelay: 1
+                              }}
+                            />
+                          ))}
+                        </motion.div>
+                      </motion.div>
+                    </motion.a>
                   ))}
                 </div>
               </div>

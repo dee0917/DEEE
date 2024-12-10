@@ -6,7 +6,7 @@ import React from 'react'
 const inter = Inter({ subsets: ["latin"] })
 const montserrat = Montserrat({ 
   subsets: ['latin'],
-  weight: ['900']  // 只加載 black 字重
+  weight: ['900']
 })
 
 export const metadata: Metadata = {

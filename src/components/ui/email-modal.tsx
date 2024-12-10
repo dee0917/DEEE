@@ -112,18 +112,34 @@ export function EmailModal({ isOpen, onClose, email }: EmailModalProps) {
 
           {/* 郵件表單 */}
           <motion.div
-            drag
-            dragMomentum={false}
-            dragConstraints={{ left: -500, right: 500, top: -300, bottom: 300 }}
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 50 }}
-            className="absolute left-[8%] top-[4%] -translate-x-1/2 -translate-y-1/3 z-50
-                     w-[300px] md:w-[500px] bg-white/80 backdrop-blur-md rounded-3xl shadow-xl
-                     cursor-move"
+            exit={{ opacity: 0, y: 100 }}
+            className="fixed bottom-0 md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 z-50 
+                     w-full md:w-[500px] h-[80vh] md:h-[600px]
+                     bg-white rounded-t-[32px] md:rounded-[32px] overflow-hidden
+                     shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.2)]
+                     md:shadow-[0_0_40px_-15px_rgba(0,0,0,0.2)]"
           >
-            {/* 頂部拖動區域 */}
-            <div className="absolute top-0 left-0 right-0 h-12 cursor-move" />
+            {/* 頂部把手和標題區域 */}
+            <div className="relative h-14 flex items-center justify-center border-b border-gray-100">
+              <div className="absolute top-2 left-1/2 -translate-x-1/2 w-12 h-1 
+                            bg-gray-300/50 rounded-full" />
+              <motion.h2 
+                className="text-lg font-bold bg-gradient-to-r from-rose-500 to-indigo-600 
+                         text-transparent bg-clip-text"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+              >
+                發送郵件
+              </motion.h2>
+              <button
+                onClick={onClose}
+                className="absolute right-4 text-gray-500 hover:text-gray-700"
+              >
+                <IoMdClose size={20} />
+              </button>
+            </div>
 
             <form onSubmit={handleSubmit} className="relative">
               {/* 關閉按鈕 */}

@@ -2,16 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
-import { 
-  IoPlayCircleOutline, 
-  IoStarOutline,
-  IoTimeOutline,
-  IoEyeOutline,
-  IoHeartOutline,
-  IoShareSocialOutline,
-  IoDiamondOutline,
-  IoVideocamOutline
-} from "react-icons/io5";
+import Image from "next/image";
 import { useState } from "react";
 
 interface PortfolioModalProps {
@@ -19,37 +10,50 @@ interface PortfolioModalProps {
   onClose: () => void;
 }
 
-interface VideoItem {
-  id: string;
+interface WorkItem {
+  id: number;
   title: string;
+  category: string;
+  image: string;
+  video: string;
   description: string;
-  thumbnail: string;
-  duration: string;
-  views: string;
-  likes: string;
-  category: "creation" | "performance";
-  featured?: boolean;
+  link: string;
+  tags: string[];
 }
 
 export function PortfolioModal({ isOpen, onClose }: PortfolioModalProps) {
-  const [activeCategory, setActiveCategory] = useState<"creation" | "performance">("creation");
-  const [selectedVideo, setSelectedVideo] = useState<VideoItem | null>(null);
+  const [activeCategory, setActiveCategory] = useState('全部');
+  const [selectedWork, setSelectedWork] = useState<WorkItem | null>(null);
 
-  // 示例視頻數據 - 之後可以替換為實際數據
-  const videos: VideoItem[] = [
+  const categories = ['全部', '舞蹈', '編舞', '表演', '教學'];
+  
+  const works: WorkItem[] = [
     {
-      id: "1",
-      title: "Urban Dance Choreography",
-      description: "原創編舞作品，融合現代街舞元素與個人風格...",
-      thumbnail: "/images/profile.png", // 暫時使用現有的圖片
-      duration: "3:45",
-      views: "12.5K",
-      likes: "1.2K",
-      category: "creation",
-      featured: true
+      id: 1,
+      title: "街舞編舞作品",
+      category: "編舞",
+      image: "/images/works/work1.jpg",
+      video: "/videos/choreography/work1.mp4",
+      description: "融合現代元素的街舞編舞，展現活力與創意",
+      link: "https://youtube.com/...",
+      tags: ['Hip-Hop', 'Choreography', 'Urban']
     },
-    // ... 可以添加更多視頻
+    {
+      id: 2,
+      title: "流行舞蹈教學",
+      category: "教學",
+      image: "/images/works/work2.jpg",
+      video: "/videos/teaching/work2.mp4",
+      description: "簡單易學的流行舞蹈教學，適合初學者",
+      link: "https://youtube.com/...",
+      tags: ['Tutorial', 'Pop Dance', 'Beginner']
+    },
+    // ... 添加更多作品
   ];
+
+  const filteredWorks = works.filter(work => 
+    activeCategory === '全部' || work.category === activeCategory
+  );
 
   return (
     <AnimatePresence>
@@ -63,142 +67,150 @@ export function PortfolioModal({ isOpen, onClose }: PortfolioModalProps) {
             onClick={onClose}
             className="fixed inset-0 bg-black/20 backdrop-blur-sm z-50"
           />
-          
+
           {/* 作品集視窗 */}
           <motion.div
-            drag
-            dragMomentum={false}
-            dragConstraints={{ left: -500, right: 500, top: -300, bottom: 300 }}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            className="absolute left-[2%] top-[10%] -translate-x-1/2 -translate-y-1/3 z-50
-                     w-[90vw] md:w-[80vw] max-w-[1200px] h-[80vh] 
-                     bg-white/80 backdrop-blur-md rounded-3xl shadow-xl
-                     flex flex-col overflow-hidden cursor-move"
+            exit={{ opacity: 0, y: 100 }}
+            className="fixed bottom-0 md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 z-50 
+                     w-full md:w-[800px] h-[80vh] md:h-[600px]
+                     bg-white rounded-t-[32px] md:rounded-[32px] overflow-hidden
+                     shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.2)]
+                     md:shadow-[0_0_40px_-15px_rgba(0,0,0,0.2)]"
           >
-            {/* 頂部拖動區域 */}
-            <div className="absolute top-0 left-0 right-0 h-12 cursor-move" />
-
-            {/* 精簡的頂部區域 */}
-            <div className="relative p-4 flex items-center justify-between border-b border-gray-200/50">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-rose-500 to-indigo-500 
-                             flex items-center justify-center text-white">
-                  <IoVideocamOutline className="text-xl" />
-                </div>
-                <div>
-                  <h2 className="text-lg font-['Montserrat'] font-bold">作品集</h2>
-                  <p className="text-sm text-gray-500">探索我的舞蹈世界</p>
-                </div>
-              </div>
-
-              {/* 分類切換 */}
-              <div className="flex gap-2">
-                <motion.button
-                  onClick={() => setActiveCategory("creation")}
-                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors
-                    ${activeCategory === "creation" 
-                      ? "bg-gradient-to-r from-rose-500 to-indigo-500 text-white" 
-                      : "bg-white/50 text-gray-600 hover:bg-white/80"}`}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  舞蹈創作
-                </motion.button>
-                <motion.button
-                  onClick={() => setActiveCategory("performance")}
-                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors
-                    ${activeCategory === "performance" 
-                      ? "bg-gradient-to-r from-rose-500 to-indigo-500 text-white" 
-                      : "bg-white/50 text-gray-600 hover:bg-white/80"}`}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  演出作品
-                </motion.button>
-              </div>
-
-              {/* 關閉按鈕 */}
+            {/* 頂部把手和標題區域 */}
+            <div className="relative h-14 flex items-center justify-center border-b border-gray-100">
+              <div className="absolute top-2 left-1/2 -translate-x-1/2 w-12 h-1 
+                            bg-gray-300/50 rounded-full" />
+              <motion.h2 
+                className="text-lg font-bold bg-gradient-to-r from-rose-500 to-indigo-600 
+                         text-transparent bg-clip-text"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+              >
+                作品集展示
+              </motion.h2>
               <button
                 onClick={onClose}
-                className="p-2 rounded-full hover:bg-gray-100/50 
-                         transition-colors duration-200"
+                className="absolute right-4 text-gray-500 hover:text-gray-700"
               >
-                <IoMdClose size={20} className="text-gray-600" />
+                <IoMdClose size={20} />
               </button>
             </div>
 
-            {/* 視頻網格 - 更大的顯示區域 */}
-            <div className="flex-1 overflow-y-auto p-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {videos
-                  .filter(video => video.category === activeCategory)
-                  .map((video, index) => (
-                    <motion.div
-                      key={video.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                      className="group relative aspect-video"
-                    >
-                      {/* 視頻卡片 */}
-                      <motion.div
-                        whileHover={{ y: -5 }}
-                        className="relative h-full rounded-2xl overflow-hidden bg-white/50 shadow-lg
-                                 hover:shadow-xl transition-all duration-300"
-                      >
-                        {/* 縮略圖 */}
-                        <div className="relative h-full">
-                          <img
-                            src={video.thumbnail}
-                            alt={video.title}
-                            className="w-full h-full object-cover"
-                          />
-                          <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 
-                                        transition-colors duration-300" />
-                          <motion.button
-                            whileHover={{ scale: 1.1 }}
-                            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
-                                     text-white/80 hover:text-white"
-                          >
-                            <IoPlayCircleOutline size={50} />
-                          </motion.button>
+            {/* 分類標籤 */}
+            <div className="px-4 py-3 flex gap-2 overflow-x-auto scrollbar-hide">
+              {categories.map((category) => (
+                <motion.button
+                  key={category}
+                  onClick={() => setActiveCategory(category)}
+                  className={`px-3 py-1.5 rounded-full text-sm font-medium whitespace-nowrap
+                            transition-all ${
+                    activeCategory === category
+                      ? 'bg-rose-500 text-white shadow-md shadow-rose-500/20'
+                      : 'bg-gray-100/80 text-gray-600 hover:bg-gray-200'
+                  }`}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  {category}
+                </motion.button>
+              ))}
+            </div>
 
-                          {/* 視頻信息 - 懸浮時顯示 */}
-                          <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t 
-                                        from-black/60 to-transparent opacity-0 group-hover:opacity-100
-                                        transition-opacity duration-300">
-                            <h3 className="text-white font-medium mb-1">{video.title}</h3>
-                            <div className="flex items-center gap-4 text-sm text-white/80">
-                              <span className="flex items-center gap-1">
-                                <IoEyeOutline />
-                                {video.views}
-                              </span>
-                              <span className="flex items-center gap-1">
-                                <IoHeartOutline />
-                                {video.likes}
-                              </span>
-                              <span>{video.duration}</span>
-                            </div>
-                          </div>
-
-                          {/* 精選標籤 */}
-                          {video.featured && (
-                            <span className="absolute top-2 left-2 px-2 py-1 rounded-full
-                                           bg-rose-500 text-white text-xs font-medium
-                                           flex items-center gap-1">
-                              <IoStarOutline />
-                              精選
-                            </span>
-                          )}
-                        </div>
-                      </motion.div>
-                    </motion.div>
-                  ))}
+            {/* 作品網格 */}
+            <div className="px-4 overflow-y-auto h-[calc(100%-110px)]">
+              <div className="grid grid-cols-2 gap-3 py-3">
+                {filteredWorks.map((work) => (
+                  <motion.div
+                    key={work.id}
+                    layoutId={`work-${work.id}`}
+                    onClick={() => setSelectedWork(work)}
+                    className="relative aspect-[3/4] rounded-xl overflow-hidden cursor-pointer"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Image
+                      src={work.image}
+                      alt={work.title}
+                      fill
+                      className="object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                    <div className="absolute bottom-0 p-3">
+                      <h3 className="text-white font-semibold text-sm leading-tight">{work.title}</h3>
+                      <div className="flex items-center gap-2 mt-1.5">
+                        <span className="px-2 py-0.5 bg-white/20 rounded-full text-white/90 text-[10px]">
+                          {work.category}
+                        </span>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
               </div>
             </div>
           </motion.div>
+
+          {/* 作品詳情彈窗 */}
+          <AnimatePresence>
+            {selectedWork && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 z-[60] bg-black/50 backdrop-blur-sm"
+                onClick={() => setSelectedWork(null)}
+              >
+                <motion.div
+                  layoutId={`work-${selectedWork.id}`}
+                  className="absolute inset-3 bg-white rounded-2xl overflow-hidden"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <div className="relative h-[45vh]">
+                    <video
+                      src={selectedWork.video}
+                      poster={selectedWork.image}
+                      controls
+                      playsInline
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                    <button
+                      onClick={() => setSelectedWork(null)}
+                      className="absolute right-3 top-3 bg-black/30 p-2 rounded-full text-white"
+                    >
+                      <IoMdClose size={20} />
+                    </button>
+                  </div>
+                  <div className="p-4">
+                    <h2 className="text-lg font-bold">{selectedWork.title}</h2>
+                    <p className="text-gray-600 text-sm mt-2 leading-relaxed">{selectedWork.description}</p>
+                    <div className="flex flex-wrap gap-1.5 mt-3">
+                      {selectedWork.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-2.5 py-1 bg-gray-100 rounded-full text-xs text-gray-600"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <motion.a
+                      href={selectedWork.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-4 w-full flex items-center justify-center px-4 py-2.5 
+                               bg-gradient-to-r from-rose-500 to-indigo-600 
+                               text-white text-sm font-medium rounded-xl"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      觀看完整作品
+                    </motion.a>
+                  </div>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </>
       )}
     </AnimatePresence>
