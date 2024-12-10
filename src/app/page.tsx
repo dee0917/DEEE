@@ -14,8 +14,9 @@ import { SideMenu } from '@/components/ui/side-menu'
 import { EmailModal } from '@/components/ui/email-modal'
 import { ContactModal } from '@/components/ui/contact-modal'
 import { AboutModal } from '@/components/ui/about-modal'
-import { PortfolioModal } from '@/components/ui/portfolio-modal'
+import PortfolioModal from '@/components/ui/portfolio-modal'
 import { IoShareSocialOutline } from 'react-icons/io5'
+import ReviewMarquee from '@/components/ui/review-marquee'
 
 // 定義 NavLink 組件的 props 類型
 interface NavLinkProps {
@@ -23,7 +24,7 @@ interface NavLinkProps {
   href?: string;
 }
 
-// 更新 NavLink 組件
+// 更 NavLink 組件
 const NavLink = ({ children, href = "#" }: NavLinkProps) => (
   <a 
     href={href}
@@ -175,6 +176,24 @@ export default function Home() {
       {/* 主要內容區 */}
       <main className="px-4 md:px-8 relative z-10">
         <div className="max-w-[1400px] mx-auto">
+          {/* 主標題 */}
+          <motion.h1
+            className="text-4xl md:text-6xl font-black tracking-tighter text-black relative z-10 font-['Montserrat']"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <span className="text-black font-['Montserrat'] font-black">Dee</span>
+            <span className="text-black font-['Montserrat'] font-black">Chen</span>
+            <span className="text-black opacity-90">.</span>
+          </motion.h1>
+
+          {/* 評論跑馬燈區域 - 放在底部 */}
+          <div className="fixed bottom-[60px] left-0 right-0 w-full space-y-1 z-10">
+            <ReviewMarquee />
+            <ReviewMarquee reverse />
+          </div>
+
           {/* 桌面版佈局 */}
           <div className="hidden md:grid grid-cols-3 gap-8">
             {/* 左側區域 */}
@@ -260,7 +279,7 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* 標語 - 手機版位置調整 */}
+              {/* 標語 */}
               <div className="absolute right-[-10px] md:right-[-180px] top-[30%] md:top-[45%] -translate-y-1/2 z-20">
                 <motion.h1 
                   className="text-4xl md:text-7xl text-right leading-[0.9] relative group"
@@ -273,7 +292,7 @@ export default function Home() {
                     }}
                   >
                     <motion.span 
-                      className="block relative font-['Montserrat'] font-semibold tracking-wide"
+                      className="block relative font-['Montserrat'] font-black tracking-tighter"
                       whileHover={{
                         x: -10,
                         transition: { type: "spring", stiffness: 300, damping: 10 }
@@ -295,7 +314,7 @@ export default function Home() {
                     }}
                   >
                     <motion.span 
-                      className="block relative font-['Montserrat'] font-semibold tracking-wide"
+                      className="block relative font-['Montserrat'] font-black tracking-tighter"
                       whileHover={{
                         x: -10,
                         transition: { type: "spring", stiffness: 300, damping: 10 }
@@ -306,18 +325,18 @@ export default function Home() {
                         blur-xl transition-all duration-300 -z-10" 
                       />
                       Chen
-                      <span className="font-['Montserrat'] font-semibold">.</span>
+                      <span className="font-['Montserrat'] font-black">.</span>
                     </motion.span>
                   </motion.div>
                 </motion.h1>
               </div>
             </div>
 
-            {/* 右側空白區域 - 在隱藏 */}
+            {/* 右側空白區域 */}
             <div className="hidden md:block col-span-1"></div>
           </div>
 
-          {/* 手機版佈 */}
+          {/* 手機版佈局 */}
           <div className="md:hidden">
             {/* 中間圖片區域 - 手機版 */}
             <div className="relative h-[500px]">
@@ -392,79 +411,12 @@ export default function Home() {
               </div>
 
               {/* 標語 - 新位置 */}
-              <div className="absolute left-[50%] bottom-[20%] -translate-x-1/2 z-10 text-center">
-                <motion.h1 
-                  className="text-4xl font-['Montserrat'] font-black tracking-tighter whitespace-nowrap relative cursor-pointer"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, ease: "easeOut" }}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <motion.div
-                    className="relative"
-                    initial={{ color: "#000000" }}
-                    animate={{ 
-                      color: ["#000000", "#FF0080", "#7928CA", "#000000"],
-                    }}
-                    transition={{ 
-                      duration: 5,
-                      repeat: Infinity,
-                      ease: "linear"
-                    }}
-                  >
-                    <motion.span
-                      className="relative inline-block"
-                      whileHover={{
-                        letterSpacing: "0.1em",
-                        transition: { duration: 0.3 }
-                      }}
-                    >
-                      {/* 閃光效果 */}
-                      <motion.span
-                        className="absolute inset-0 w-full bg-gradient-to-r from-transparent via-white to-transparent opacity-0"
-                        whileHover={{
-                          opacity: [0, 0.5, 0],
-                          x: ['-100%', '100%'],
-                          transition: {
-                            duration: 1,
-                            ease: "easeInOut"
-                          }
-                        }}
-                      />
-                      
-                      {/* 粒子效果 */}
-                      <motion.span
-                        className="absolute -inset-4 pointer-events-none"
-                        whileHover={{
-                          opacity: 1,
-                          transition: { duration: 0.2 }
-                        }}
-                      >
-                        {[...Array(8)].map((_, i) => (
-                          <motion.span
-                            key={i}
-                            className="absolute w-1 h-1 bg-rose-500/50 rounded-full"
-                            initial={{ opacity: 0, scale: 0 }}
-                            whileHover={{
-                              opacity: [0, 1, 0],
-                              scale: [0, 1, 0],
-                              x: Math.cos(i * Math.PI / 4) * 20,
-                              y: Math.sin(i * Math.PI / 4) * 20,
-                              transition: {
-                                duration: 0.8,
-                                delay: i * 0.05,
-                                repeat: Infinity
-                              }
-                            }}
-                          />
-                        ))}
-                      </motion.span>
-                      Dee Chen
-                    </motion.span>
-                  </motion.div>
+              {/* 移除 DEE CHEN 文字及其動畫效果 */}
+              {/* <div className="absolute left-[50%] bottom-[23%] -translate-x-1/2 z-10 text-center">
+                <motion.h1>
+                  ...
                 </motion.h1>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

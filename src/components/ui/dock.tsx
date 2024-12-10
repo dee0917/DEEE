@@ -1,6 +1,6 @@
 "use client";
 
-import React, { PropsWithChildren, useRef, useEffect, useState } from "react";
+import React, { PropsWithChildren, useRef } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
@@ -43,10 +43,10 @@ const Dock = React.forwardRef<HTMLDivElement, DockProps>(
         {...props}
         className={cn(
           dockVariants({ className }),
-          "fixed z-20 transition-all duration-300 flex gap-2",
+          "fixed z-20 transition-all duration-300 flex gap-0.5",
           "bottom-2 left-1/2 -translate-x-1/2 flex-row !h-12 !w-auto",
           "md:left-8 md:top-1/2 md:-translate-y-1/2 md:flex-col md:!h-auto md:!w-[52px]",
-          "px-3 py-0.5"
+          "p-0.5"
         )}
       >
         {children}
@@ -77,44 +77,6 @@ const DockIcon = ({
   ...props
 }: DockIconProps) => {
   const ref = useRef<HTMLDivElement>(null);
-  
-  const [isHovered, setIsHovered] = useState(false);
-  const rect = useRef<DOMRect>();
-
-  useEffect(() => {
-    if (ref.current) {
-      rect.current = ref.current.getBoundingClientRect();
-    }
-  }, []);
-
-  const scale = useSpring(1, {
-    stiffness: 400,
-    damping: 30
-  });
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!rect.current) return;
-
-    const mouseX = e.clientX;
-    const mouseY = e.clientY;
-    const iconCenterX = rect.current.x + rect.current.width / 2;
-    const iconCenterY = rect.current.y + rect.current.height / 2;
-    
-    const distance = Math.sqrt(
-      Math.pow(mouseX - iconCenterX, 2) + 
-      Math.pow(mouseY - iconCenterY, 2)
-    );
-
-    const maxDistance = 100;
-    const maxScale = 1.5;
-
-    if (distance < maxDistance) {
-      const scaleValue = 1 + (maxScale - 1) * (1 - distance / maxDistance);
-      scale.set(scaleValue);
-    } else {
-      scale.set(1);
-    }
-  };
 
   return (
     <div
@@ -124,32 +86,25 @@ const DockIcon = ({
         "p-0.5",
         className,
       )}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={() => scale.set(1)}
       {...props}
     >
       <motion.div 
         className="absolute inset-0 rounded-full bg-gradient-to-r from-rose-500/0 via-fuchsia-500/0 to-indigo-500/0
                    group-hover:from-rose-500/10 group-hover:via-fuchsia-500/10 group-hover:to-indigo-500/10"
-        style={{ scale }}
-      />
-
-      <motion.div 
-        className="relative z-10 w-full h-full flex items-center justify-center"
-        style={{ scale }}
-      >
-        {children}
-      </motion.div>
-
-      <motion.div
-        className="absolute -bottom-3 left-0 right-0 h-4 opacity-0 group-hover:opacity-30
-                   bg-gradient-to-b from-gray-900/20 to-transparent blur-sm"
-        style={{ scale }}
+        whileHover={{
+          scale: 1.2,
+          rotate: 180,
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 200,
+          damping: 10
+        }}
       />
 
       <motion.div
         className="absolute -inset-1 rounded-full opacity-0 group-hover:opacity-100"
-        style={{ scale }}
+        initial={false}
         animate={{
           boxShadow: [
             "0 0 0 0px rgba(255, 255, 255, 0)",
@@ -163,6 +118,54 @@ const DockIcon = ({
           ease: "easeInOut"
         }}
       />
+
+      <motion.div
+        className="absolute inset-[4px] rounded-full bg-gray-300/0 
+                   group-hover:bg-gray-300/50 transition-all duration-300"
+        whileTap={{
+          scale: 1.5,
+          opacity: 0,
+          transition: { duration: 0.5 }
+        }}
+      />
+
+      <motion.div 
+        className="relative z-10"
+        whileHover={{
+          scale: 1.1,
+          rotate: [0, -10, 10, -10, 10, 0],
+        }}
+        transition={{
+          rotate: {
+            duration: 0.5,
+            ease: "easeInOut"
+          }
+        }}
+      >
+        {children}
+      </motion.div>
+
+      <div className="absolute -inset-4 opacity-0 group-hover:opacity-100 pointer-events-none">
+        {[...Array(6)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 bg-white rounded-full"
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{
+              opacity: [0, 1, 0],
+              scale: [0, 1, 0],
+              x: Math.cos(i * Math.PI / 3) * 15,
+              y: Math.sin(i * Math.PI / 3) * 15,
+            }}
+            transition={{
+              duration: 1,
+              repeat: Infinity,
+              delay: i * 0.1,
+              repeatDelay: 1
+            }}
+          />
+        ))}
+      </div>
     </div>
   );
 };

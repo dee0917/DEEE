@@ -114,12 +114,12 @@ export function AboutModal({ isOpen, onClose }: AboutModalProps) {
               <div className="absolute top-2 left-1/2 -translate-x-1/2 w-12 h-1 
                             bg-gray-300/50 rounded-full" />
               <motion.h2 
-                className="text-lg font-bold bg-gradient-to-r from-rose-500 to-indigo-600 
-                         text-transparent bg-clip-text"
+                className="text-lg font-black tracking-tighter bg-gradient-to-r from-rose-500 to-indigo-600 
+                         text-transparent bg-clip-text font-['Montserrat']"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
               >
-                陳亞棣 DEECHEN
+                陳亞棣 <span className="font-black tracking-tighter">Dee</span><span className="font-black tracking-tighter">Chen</span><span className="opacity-90">.</span>
               </motion.h2>
               <button
                 onClick={onClose}

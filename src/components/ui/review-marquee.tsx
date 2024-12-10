@@ -68,7 +68,6 @@ const allReviews = [
 ]
 
 export default function ReviewMarquee({ reverse }: ReviewMarqueeProps) {
-  // 使用 useMemo 來隨機打亂所有評論的順序，但只打亂一次
   const shuffledReviews = useMemo(() => {
     const shuffled = [...allReviews]
     for (let i = shuffled.length - 1; i > 0; i--) {
@@ -81,19 +80,53 @@ export default function ReviewMarquee({ reverse }: ReviewMarqueeProps) {
   return (
     <div className="relative flex overflow-hidden">
       <div 
-        className={reverse ? "animate-marquee-reverse" : "animate-marquee"}
-        style={{ display: 'flex', whiteSpace: 'nowrap' }}
+        className={`flex ${reverse ? "animate-marquee-reverse" : "animate-marquee"}`}
       >
-        {/* 只重複兩次，確保無縫循環 */}
-        {[...Array(2)].map((_, i) => (
-          <div key={i} className="flex gap-3 px-3">
+        {/* 重複四次以確保無縫循環 */}
+        {[...Array(4)].map((_, i) => (
+          <div key={i} className="flex gap-3 px-3 min-w-max">
             {shuffledReviews.map((review, index) => (
               <div
                 key={`${i}-${index}`}
                 className="w-[180px] bg-white/90 backdrop-blur-sm rounded-lg p-2 shadow-sm"
               >
                 <div className="flex items-center gap-2">
-                  <div className={`w-6 h-6 rounded-full bg-gradient-to-r ${review.gradient} animate-pulse-slow`} />
+                  <div 
+                    className={`w-6 h-6 rounded-full bg-gradient-to-r ${review.gradient} animate-pulse-slow`}
+                    style={{
+                      boxShadow: '0 0 10px rgba(0,0,0,0.1)',
+                    }}
+                  />
+                  <div>
+                    <div className="font-medium text-xs">{review.name}</div>
+                    <div className="text-gray-500 text-xs">{review.username}</div>
+                  </div>
+                </div>
+                <p className="mt-1 text-gray-700 text-xs line-clamp-2">{review.content}</p>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+      {/* 創建一個完全相同的副本來實現無縫循環 */}
+      <div 
+        className={`flex ${reverse ? "animate-marquee-reverse" : "animate-marquee"}`}
+        aria-hidden="true"
+      >
+        {[...Array(4)].map((_, i) => (
+          <div key={`clone-${i}`} className="flex gap-3 px-3 min-w-max">
+            {shuffledReviews.map((review, index) => (
+              <div
+                key={`clone-${i}-${index}`}
+                className="w-[180px] bg-white/90 backdrop-blur-sm rounded-lg p-2 shadow-sm"
+              >
+                <div className="flex items-center gap-2">
+                  <div 
+                    className={`w-6 h-6 rounded-full bg-gradient-to-r ${review.gradient} animate-pulse-slow`}
+                    style={{
+                      boxShadow: '0 0 10px rgba(0,0,0,0.1)',
+                    }}
+                  />
                   <div>
                     <div className="font-medium text-xs">{review.name}</div>
                     <div className="text-gray-500 text-xs">{review.username}</div>

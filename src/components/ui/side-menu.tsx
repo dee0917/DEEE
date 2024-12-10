@@ -5,9 +5,11 @@ import { IoMdClose } from "react-icons/io";
 import { FiHome, FiBox, FiShoppingBag, FiUser, FiMail } from "react-icons/fi";
 import { FaInstagram, FaYoutube, FaFacebookF } from "react-icons/fa";
 import { useState } from 'react';
+import { SocialModal } from './social-modal';
+import { EmailModal } from './email-modal';
 import { ContactModal } from './contact-modal';
 import { AboutModal } from './about-modal';
-import { PortfolioModal } from './portfolio-modal';
+import PortfolioModal from './portfolio-modal';
 
 interface SideMenuProps {
   isOpen: boolean;
